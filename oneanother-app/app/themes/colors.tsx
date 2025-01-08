@@ -1,0 +1,15 @@
+export default {
+  primary: "#F3614D",
+  secondary: "#FFFFFF",
+  landingGradientStart: "#FD784E",
+  shadow: "rgba(232, 232, 232, 102)",
+  border: "#727272",
+  hintText: "#525252",
+  greyText: "#343434",
+  disabledTextInput: "#DEDEDE",
+  subText: "#525252",
+  background: "#FAFAFA",
+  searchTextInput: "#F4F4F4",
+  churchThumbnailGradientStart: "#F3613D00",
+  churchThumbnailGradientEnd: "#000000CC",
+};
