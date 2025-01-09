@@ -24,7 +24,8 @@ public class GetEventQueryHandler : IRequestHandler<GetEventQuery, EventDto>
     public async Task<EventDto> Handle(GetEventQuery request, CancellationToken cancellationToken)
     {
         var entity = await _context.Events
-            .FindAsync(request.Id);
+            .Include(x => x.Church)
+            .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
 
         if (entity == null)
         {

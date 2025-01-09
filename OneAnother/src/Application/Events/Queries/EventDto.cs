@@ -10,11 +10,13 @@ public class EventDto
     public DateTimeOffset Date { get; set; }
     public string? Location { get; set; }
     public EventType Type { get; set; }
+    public int ChurchId { get; set; }
     private class Mapping : Profile
     {
         public Mapping()
         {
-            CreateMap<Event, EventDto>();
+            CreateMap<Event, EventDto>()
+                .ForMember(d => d.ChurchId, opt => opt.MapFrom(s => s.Church.Id));
         }
     }
 }

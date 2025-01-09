@@ -865,6 +865,10 @@
           },
           "type": {
             "$ref": "#/components/schemas/EventType"
+          },
+          "churchId": {
+            "type": "integer",
+            "format": "int32"
           }
         }
       },
