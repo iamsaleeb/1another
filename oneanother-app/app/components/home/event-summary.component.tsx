@@ -42,7 +42,7 @@ const EventSummaryComponent: React.FC<Event> = ({
       key={id}
       style={[cardStyles.card, styles.touchable]}
       onPress={() => {
-        router.push("/screens/my-events/event-details.screen");
+        router.push(`/screens/my-events/event-details.screen?id=${id}`);
       }}
     >
       <Text style={textStyles.timeText}>{formatTime(time)}</Text>

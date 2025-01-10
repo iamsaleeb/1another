@@ -31,6 +31,7 @@ app.UseSwaggerUi(settings =>
     settings.DocumentPath = "/api/specification.json";
 });
 
+app.UseCors("CorsOriginsPolicy");
 
 app.UseExceptionHandler(options => { });
 

@@ -866,9 +866,9 @@
           "type": {
             "$ref": "#/components/schemas/EventType"
           },
-          "churchId": {
-            "type": "integer",
-            "format": "int32"
+          "churchName": {
+            "type": "string",
+            "nullable": true
           }
         }
       },

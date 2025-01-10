@@ -15,6 +15,18 @@ public static class DependencyInjection
 
         builder.Services.AddScoped<IUser, CurrentUser>();
 
+        builder.Services.AddCors(C =>
+        {
+            C.AddPolicy("CorsOriginsPolicy", policy =>
+            {
+                policy.WithOrigins(
+                    "http://localhost:8081")
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials();
+            });
+        });
+
         builder.Services.AddHttpContextAccessor();
         builder.Services.AddHealthChecks()
             .AddDbContextCheck<ApplicationDbContext>();

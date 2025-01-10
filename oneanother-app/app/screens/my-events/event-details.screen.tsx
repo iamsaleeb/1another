@@ -1,16 +1,45 @@
 import SecondaryButton from "@/app/components/common/secondary-button.component";
 import TopBar from "@/app/components/common/top-bar.component";
+import { EventDto } from "@/app/services/api/web-api-client";
+import EventService from "@/app/services/EventService";
 import cardStyles from "@/app/styles/common/card.style";
 import textStyles from "@/app/styles/common/text.style";
 import styles from "@/app/styles/screens/event-details.style";
 import colors from "@/app/themes/colors";
-import { Router, useRouter } from "expo-router";
-import React, { useState } from "react";
+import { Router, useLocalSearchParams, useRouter } from "expo-router";
+import React, { useEffect, useState } from "react";
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 
 const EventDetailsScreen: React.FC = () => {
   let router: Router = useRouter();
   const [isSaved, setIsSaved] = useState(false);
+  const [event, setEvent] = useState<EventDto | null>(new EventDto());
+  const { id } = useLocalSearchParams();
+
+  useEffect(() => {
+    const fetchEvent = async () => {
+      if (id) {
+        try {
+          const eventData = await EventService.getEventById(Number(id));
+          setEvent(eventData);
+          console.log("Event data:", eventData);
+        } catch (error) {
+          console.error("Error fetching event data:", error);
+        }
+      }
+    };
+
+    fetchEvent();
+  }, [id]);
+
+  if (!event) {
+    return (
+      <View style={styles.container}>
+        <Text>Loading...</Text>
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
       <TopBar style={styles.topBar}>
@@ -34,9 +63,7 @@ const EventDetailsScreen: React.FC = () => {
             source={require("@/assets/images/tmp/event-sample.png")}
           />
           <View style={[cardStyles.card, styles.eventCardText]}>
-            <Text style={textStyles.midTitle}>
-              Apologetics for the Resurrection 101
-            </Text>
+            <Text style={textStyles.midTitle}>{event?.title}</Text>
             <View style={styles.cardInfoRowContainer}>
               <Image
                 source={require("@/assets/images/icons/church-orange-event-icon.png")}
@@ -45,7 +72,7 @@ const EventDetailsScreen: React.FC = () => {
               <View style={styles.cardInfoRowDescriptionContainer}>
                 <Text style={textStyles.caption}>Church</Text>
                 <Text style={textStyles.textInputTitle}>
-                  St Mary & St Mina's Church, Arncliffe
+                  {event.churchName}
                 </Text>
               </View>
             </View>
@@ -56,7 +83,9 @@ const EventDetailsScreen: React.FC = () => {
               />
               <View style={styles.cardInfoRowDescriptionContainer}>
                 <Text style={textStyles.caption}>Date</Text>
-                <Text style={textStyles.textInputTitle}>Friday, Oct 22</Text>
+                <Text style={textStyles.textInputTitle}>
+                  {event.date?.toDateString()}
+                </Text>
               </View>
             </View>
             <View style={styles.cardInfoRowContainer}>
@@ -66,7 +95,9 @@ const EventDetailsScreen: React.FC = () => {
               />
               <View style={styles.cardInfoRowDescriptionContainer}>
                 <Text style={textStyles.caption}>Time</Text>
-                <Text style={textStyles.textInputTitle}>07:30 - 8:30 PM</Text>
+                <Text style={textStyles.textInputTitle}>
+                  {event.date?.toLocaleTimeString()}
+                </Text>
               </View>
             </View>
             <View style={styles.cardInfoRowContainer}>
@@ -76,18 +107,12 @@ const EventDetailsScreen: React.FC = () => {
               />
               <View style={styles.cardInfoRowDescriptionContainer}>
                 <Text style={textStyles.caption}>Location</Text>
-                <Text style={textStyles.textInputTitle}>
-                  The Tops Conference Centre
-                </Text>
+                <Text style={textStyles.textInputTitle}>{event.location}</Text>
               </View>
             </View>
           </View>
           <View style={[cardStyles.card, styles.fullDescriptionCard]}>
-            <Text>
-              {
-                "| FRIDAY NIGHT YOUTH MEETING |\n\nJoin us this Friday night for some words of wisdom from our special guest Bethany Kaldas followed by loaded parmigiana and chips to fill your empty stomachs 🍗 🍟\n\nWe look forward to seeing you all @8:30 😊\n\n[same text again to show longer description]\n\n| FRIDAY NIGHT YOUTH MEETING |\n\nJoin us this Friday night for some words of wisdom from our special guest Bethany Kaldas followed by loaded parmigiana and chips to fill your empty stomachs 🍗 🍟\n\nWe look forward to seeing you all @8:30 😊"
-              }
-            </Text>
+            <Text>{event.description}</Text>
           </View>
         </View>
       </ScrollView>
