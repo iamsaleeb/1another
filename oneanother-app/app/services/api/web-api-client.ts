@@ -8,6 +8,96 @@
 /* eslint-disable */
 // ReSharper disable InconsistentNaming
 
+export class ChurchesClient {
+    private http: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> };
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(baseUrl?: string, http?: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> }) {
+        this.http = http ? http : window as any;
+        this.baseUrl = baseUrl ?? "";
+    }
+
+    getChurch(id: number): Promise<ChurchDto> {
+        let url_ = this.baseUrl + "/api/Churches/{Id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{Id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processGetChurch(_response);
+        });
+    }
+
+    protected processGetChurch(response: Response): Promise<ChurchDto> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ChurchDto.fromJS(resultData200);
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<ChurchDto>(null as any);
+    }
+
+    getChurchesWithPagination(pageNumber: number, pageSize: number): Promise<PaginatedListOfChurchDto> {
+        let url_ = this.baseUrl + "/api/Churches?";
+        if (pageNumber === undefined || pageNumber === null)
+            throw new Error("The parameter 'pageNumber' must be defined and cannot be null.");
+        else
+            url_ += "PageNumber=" + encodeURIComponent("" + pageNumber) + "&";
+        if (pageSize === undefined || pageSize === null)
+            throw new Error("The parameter 'pageSize' must be defined and cannot be null.");
+        else
+            url_ += "PageSize=" + encodeURIComponent("" + pageSize) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processGetChurchesWithPagination(_response);
+        });
+    }
+
+    protected processGetChurchesWithPagination(response: Response): Promise<PaginatedListOfChurchDto> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PaginatedListOfChurchDto.fromJS(resultData200);
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<PaginatedListOfChurchDto>(null as any);
+    }
+}
+
 export class EventsClient {
     private http: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> };
     private baseUrl: string;
@@ -989,6 +1079,74 @@ export class WeatherForecastsClient {
     }
 }
 
+export class ChurchDto implements IChurchDto {
+    id?: number;
+    name?: string | undefined;
+    website?: string | undefined;
+    facebookUrl?: string | undefined;
+    instagramUrl?: string | undefined;
+    address?: string | undefined;
+    events?: EventDto[];
+
+    constructor(data?: IChurchDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.name = _data["name"];
+            this.website = _data["website"];
+            this.facebookUrl = _data["facebookUrl"];
+            this.instagramUrl = _data["instagramUrl"];
+            this.address = _data["address"];
+            if (Array.isArray(_data["events"])) {
+                this.events = [] as any;
+                for (let item of _data["events"])
+                    this.events!.push(EventDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): ChurchDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ChurchDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["name"] = this.name;
+        data["website"] = this.website;
+        data["facebookUrl"] = this.facebookUrl;
+        data["instagramUrl"] = this.instagramUrl;
+        data["address"] = this.address;
+        if (Array.isArray(this.events)) {
+            data["events"] = [];
+            for (let item of this.events)
+                data["events"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface IChurchDto {
+    id?: number;
+    name?: string | undefined;
+    website?: string | undefined;
+    facebookUrl?: string | undefined;
+    instagramUrl?: string | undefined;
+    address?: string | undefined;
+    events?: EventDto[];
+}
+
 export class EventDto implements IEventDto {
     id?: number;
     title?: string | undefined;
@@ -1053,6 +1211,70 @@ export enum EventType {
     SundayMass = 0,
     WeeklySermon = 1,
     SpecialService = 2,
+}
+
+export class PaginatedListOfChurchDto implements IPaginatedListOfChurchDto {
+    items?: ChurchDto[];
+    pageNumber?: number;
+    totalPages?: number;
+    totalCount?: number;
+    hasPreviousPage?: boolean;
+    hasNextPage?: boolean;
+
+    constructor(data?: IPaginatedListOfChurchDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(ChurchDto.fromJS(item));
+            }
+            this.pageNumber = _data["pageNumber"];
+            this.totalPages = _data["totalPages"];
+            this.totalCount = _data["totalCount"];
+            this.hasPreviousPage = _data["hasPreviousPage"];
+            this.hasNextPage = _data["hasNextPage"];
+        }
+    }
+
+    static fromJS(data: any): PaginatedListOfChurchDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PaginatedListOfChurchDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        data["pageNumber"] = this.pageNumber;
+        data["totalPages"] = this.totalPages;
+        data["totalCount"] = this.totalCount;
+        data["hasPreviousPage"] = this.hasPreviousPage;
+        data["hasNextPage"] = this.hasNextPage;
+        return data;
+    }
+}
+
+export interface IPaginatedListOfChurchDto {
+    items?: ChurchDto[];
+    pageNumber?: number;
+    totalPages?: number;
+    totalCount?: number;
+    hasPreviousPage?: boolean;
+    hasNextPage?: boolean;
 }
 
 export class PaginatedListOfEventDto implements IPaginatedListOfEventDto {

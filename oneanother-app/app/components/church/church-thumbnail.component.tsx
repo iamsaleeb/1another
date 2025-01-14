@@ -5,15 +5,23 @@ import colors from "@/app/themes/colors";
 import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
-import {  useNavigation, ParamListBase,  NavigationProp } from '@react-navigation/native';
+import {
+  useNavigation,
+  ParamListBase,
+  NavigationProp,
+} from "@react-navigation/native";
+import { IChurchDto } from "@/app/services/api/web-api-client";
 
-
-const ChurchThumbnailComponent: React.FC<Church> = ({ id, name, image }) => {
+const ChurchThumbnailComponent: React.FC<IChurchDto> = ({
+  id,
+  name,
+  image,
+}) => {
   const navigation: NavigationProp<ParamListBase> = useNavigation();
   return (
     <TouchableOpacity
       onPress={() => {
-        navigation.navigate("church-profile")
+        navigation.navigate("church-profile");
       }}
       style={styles.touchable}
     >

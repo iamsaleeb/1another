@@ -1,4 +1,4 @@
-import { EventDto } from "@/app/services/api/web-api-client";
+import { EventDto, IEventDto } from "@/app/services/api/web-api-client";
 import cardStyles from "@/app/styles/common/card.style";
 import textStyles from "@/app/styles/common/text.style";
 import styles from "@/app/styles/components/event/event-summary.style";
@@ -23,7 +23,7 @@ const formatTime = (time: Date) => {
   return `${weekday[time.getDay()]}, ${time.getDate()} ${month[time.getMonth()]} | ${formattedTime}`;
 };
 
-const EventSummaryComponent: React.FC<EventDto> = ({
+const EventSummaryComponent: React.FC<IEventDto> = ({
   id,
   title,
   churchName,

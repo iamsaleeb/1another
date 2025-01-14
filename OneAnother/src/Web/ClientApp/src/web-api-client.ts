@@ -1080,6 +1080,7 @@ export class WeatherForecastsClient {
 }
 
 export class ChurchDto implements IChurchDto {
+    id?: number;
     name?: string | undefined;
     website?: string | undefined;
     facebookUrl?: string | undefined;
@@ -1098,6 +1099,7 @@ export class ChurchDto implements IChurchDto {
 
     init(_data?: any) {
         if (_data) {
+            this.id = _data["id"];
             this.name = _data["name"];
             this.website = _data["website"];
             this.facebookUrl = _data["facebookUrl"];
@@ -1120,6 +1122,7 @@ export class ChurchDto implements IChurchDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
         data["name"] = this.name;
         data["website"] = this.website;
         data["facebookUrl"] = this.facebookUrl;
@@ -1135,6 +1138,7 @@ export class ChurchDto implements IChurchDto {
 }
 
 export interface IChurchDto {
+    id?: number;
     name?: string | undefined;
     website?: string | undefined;
     facebookUrl?: string | undefined;

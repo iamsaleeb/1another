@@ -4,6 +4,7 @@ using OneAnother.Domain.Entities;
 namespace OneAnother.Application.Churches.Queries.GetChurch;
 public class ChurchDto
 {
+    public int Id { get; set; }
     public string? Name { get; set; }
     public string? Website { get; set; }
     public string? FacebookUrl { get; set; }
