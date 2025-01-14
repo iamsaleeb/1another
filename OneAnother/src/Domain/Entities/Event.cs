@@ -13,6 +13,7 @@ public class Event : BaseAuditableEntity
     public string? Location { get; set; }
     public EventType Type { get; set; }
     public Church Church { get; set; } = null!;
+    //public List<string> SavedUsers { get; set; } = new();
 }
 
 public class RecurringEvent : Event

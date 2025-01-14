@@ -14,11 +14,11 @@ public record GetEventsWithPaginationQuery : IRequest<PaginatedList<EventDto>>
     public int PageSize { get; init; } = 10;
 }
 
-public class GetEventsWithPaginationHandler : IRequestHandler<GetEventsWithPaginationQuery, PaginatedList<EventDto>>
+public class GetEventsWithPaginationQueryHandler : IRequestHandler<GetEventsWithPaginationQuery, PaginatedList<EventDto>>
 {
     private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;
-    public GetEventsWithPaginationHandler(IApplicationDbContext context, IMapper mapper)
+    public GetEventsWithPaginationQueryHandler(IApplicationDbContext context, IMapper mapper)
     {
         _context = context;
         _mapper = mapper;
