@@ -13,4 +13,5 @@ public class Church : BaseAuditableEntity
     public string? InstagramUrl { get; set; }
     public string? Address { get; set; }
     public IList<Event> Events { get; set; } = new List<Event>();
+    public IList<string> FollowerUserIds { get; set; } = new List<string>();
 }

@@ -16,8 +16,8 @@ public class Event : BaseAuditableEntity
     public EventType EventType { get; set; }
     public EventSubType EventSubType { get; set; }
     public Church Church { get; set; } = null!;
-    //public List<string> SavedUsers { get; set; } = new();
-}
+    public IList<string> AttendeeUserIds { get; set; } = new List<string>();
+}   
 
 public class RecurringEvent : Event
 {

@@ -80,6 +80,39 @@
         }
       }
     },
+    "/api/Churches/follow": {
+      "post": {
+        "tags": [
+          "Churches"
+        ],
+        "operationId": "FollowChurch",
+        "requestBody": {
+          "x-name": "command",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FollowChurchCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Events/{Id}": {
       "get": {
         "tags": [
@@ -1102,6 +1135,16 @@
           },
           "hasNextPage": {
             "type": "boolean"
+          }
+        }
+      },
+      "FollowChurchCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "churchId": {
+            "type": "integer",
+            "format": "int32"
           }
         }
       },
