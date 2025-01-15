@@ -97,18 +97,17 @@ export class ChurchesClient {
         return Promise.resolve<PaginatedListOfChurchDto>(null as any);
     }
 
-    followChurch(command: FollowChurchCommand): Promise<number> {
-        let url_ = this.baseUrl + "/api/Churches/follow";
+    followChurch(churchId: number): Promise<void> {
+        let url_ = this.baseUrl + "/api/Churches/follow?";
+        if (churchId === undefined || churchId === null)
+            throw new Error("The parameter 'churchId' must be defined and cannot be null.");
+        else
+            url_ += "ChurchId=" + encodeURIComponent("" + churchId) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
-        const content_ = JSON.stringify(command);
-
         let options_: RequestInit = {
-            body: content_,
             method: "POST",
             headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json"
             }
         };
 
@@ -117,23 +116,19 @@ export class ChurchesClient {
         });
     }
 
-    protected processFollowChurch(response: Response): Promise<number> {
+    protected processFollowChurch(response: Response): Promise<void> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-                result200 = resultData200 !== undefined ? resultData200 : <any>null;
-    
-            return result200;
+            return;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
-        return Promise.resolve<number>(null as any);
+        return Promise.resolve<void>(null as any);
     }
 }
 
@@ -1338,42 +1333,6 @@ export interface IPaginatedListOfChurchDto {
     totalCount?: number;
     hasPreviousPage?: boolean;
     hasNextPage?: boolean;
-}
-
-export class FollowChurchCommand implements IFollowChurchCommand {
-    churchId?: number;
-
-    constructor(data?: IFollowChurchCommand) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.churchId = _data["churchId"];
-        }
-    }
-
-    static fromJS(data: any): FollowChurchCommand {
-        data = typeof data === 'object' ? data : {};
-        let result = new FollowChurchCommand();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["churchId"] = this.churchId;
-        return data;
-    }
-}
-
-export interface IFollowChurchCommand {
-    churchId?: number;
 }
 
 export class PaginatedListOfEventDto implements IPaginatedListOfEventDto {

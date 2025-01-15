@@ -86,29 +86,21 @@
           "Churches"
         ],
         "operationId": "FollowChurch",
-        "requestBody": {
-          "x-name": "command",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/FollowChurchCommand"
-              }
-            }
-          },
-          "required": true,
-          "x-position": 1
-        },
+        "parameters": [
+          {
+            "name": "ChurchId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
         "responses": {
           "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "integer",
-                  "format": "int32"
-                }
-              }
-            }
+            "description": ""
           }
         }
       }
@@ -1135,16 +1127,6 @@
           },
           "hasNextPage": {
             "type": "boolean"
-          }
-        }
-      },
-      "FollowChurchCommand": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "churchId": {
-            "type": "integer",
-            "format": "int32"
           }
         }
       },
