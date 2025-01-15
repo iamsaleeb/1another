@@ -1151,9 +1151,12 @@ export class EventDto implements IEventDto {
     id?: number;
     title?: string | undefined;
     description?: string | undefined;
-    date?: Date;
+    startDate?: Date;
+    endDate?: Date;
     location?: string | undefined;
-    type?: EventType;
+    speaker?: string | undefined;
+    eventType?: EventType;
+    eventSubType?: EventSubType;
     churchName?: string | undefined;
 
     constructor(data?: IEventDto) {
@@ -1170,9 +1173,12 @@ export class EventDto implements IEventDto {
             this.id = _data["id"];
             this.title = _data["title"];
             this.description = _data["description"];
-            this.date = _data["date"] ? new Date(_data["date"].toString()) : <any>undefined;
+            this.startDate = _data["startDate"] ? new Date(_data["startDate"].toString()) : <any>undefined;
+            this.endDate = _data["endDate"] ? new Date(_data["endDate"].toString()) : <any>undefined;
             this.location = _data["location"];
-            this.type = _data["type"];
+            this.speaker = _data["speaker"];
+            this.eventType = _data["eventType"];
+            this.eventSubType = _data["eventSubType"];
             this.churchName = _data["churchName"];
         }
     }
@@ -1189,9 +1195,12 @@ export class EventDto implements IEventDto {
         data["id"] = this.id;
         data["title"] = this.title;
         data["description"] = this.description;
-        data["date"] = this.date ? this.date.toISOString() : <any>undefined;
+        data["startDate"] = this.startDate ? this.startDate.toISOString() : <any>undefined;
+        data["endDate"] = this.endDate ? this.endDate.toISOString() : <any>undefined;
         data["location"] = this.location;
-        data["type"] = this.type;
+        data["speaker"] = this.speaker;
+        data["eventType"] = this.eventType;
+        data["eventSubType"] = this.eventSubType;
         data["churchName"] = this.churchName;
         return data;
     }
@@ -1201,16 +1210,31 @@ export interface IEventDto {
     id?: number;
     title?: string | undefined;
     description?: string | undefined;
-    date?: Date;
+    startDate?: Date;
+    endDate?: Date;
     location?: string | undefined;
-    type?: EventType;
+    speaker?: string | undefined;
+    eventType?: EventType;
+    eventSubType?: EventSubType;
     churchName?: string | undefined;
 }
 
 export enum EventType {
+    Mass = 0,
+    Meeting = 1,
+    SpecialEvent = 2,
+}
+
+export enum EventSubType {
     SundayMass = 0,
-    WeeklySermon = 1,
-    SpecialService = 2,
+    WeekdayMass = 1,
+    RegularMeeting = 2,
+    YouthMeeting = 3,
+    Camp = 4,
+    Retreat = 5,
+    Conference = 6,
+    SpecialMass = 7,
+    Other = 8,
 }
 
 export class PaginatedListOfChurchDto implements IPaginatedListOfChurchDto {

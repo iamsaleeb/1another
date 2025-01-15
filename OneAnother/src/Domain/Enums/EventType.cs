@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace OneAnother.Domain.Enums;
 public enum EventType
 {
-    SundayMass,
-    WeeklySermon,
-    SpecialService,
+    Mass,
+    Meeting,
+    SpecialEvent,
 }

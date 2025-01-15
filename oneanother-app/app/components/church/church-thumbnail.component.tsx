@@ -11,6 +11,7 @@ import {
   NavigationProp,
 } from "@react-navigation/native";
 import { IChurchDto } from "@/app/services/api/web-api-client";
+import { router } from "expo-router";
 
 const ChurchThumbnailComponent: React.FC<IChurchDto> = ({
   id,
@@ -21,7 +22,7 @@ const ChurchThumbnailComponent: React.FC<IChurchDto> = ({
   return (
     <TouchableOpacity
       onPress={() => {
-        navigation.navigate("church-profile");
+        router.push(`/screens/church/church-profile.screen?id=${id}`);
       }}
       style={styles.touchable}
     >

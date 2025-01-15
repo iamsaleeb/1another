@@ -26,7 +26,7 @@ public class GetEventsWithPaginationQueryHandler : IRequestHandler<GetEventsWith
     public async Task<PaginatedList<EventDto>> Handle(GetEventsWithPaginationQuery request, CancellationToken cancellationToken)
     {
         return await _context.Events
-            .OrderBy(x => x.Date)
+            .OrderBy(x => x.StartDate)
             .ProjectTo<EventDto>(_mapper.ConfigurationProvider)
             .PaginatedListAsync(request.PageNumber, request.PageSize);
     }

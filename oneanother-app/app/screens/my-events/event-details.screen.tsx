@@ -84,7 +84,7 @@ const EventDetailsScreen: React.FC = () => {
               <View style={styles.cardInfoRowDescriptionContainer}>
                 <Text style={textStyles.caption}>Date</Text>
                 <Text style={textStyles.textInputTitle}>
-                  {event.date?.toDateString()}
+                  {event.startDate?.toDateString()}
                 </Text>
               </View>
             </View>
@@ -96,7 +96,7 @@ const EventDetailsScreen: React.FC = () => {
               <View style={styles.cardInfoRowDescriptionContainer}>
                 <Text style={textStyles.caption}>Time</Text>
                 <Text style={textStyles.textInputTitle}>
-                  {event.date?.toLocaleTimeString()}
+                  {event.startDate?.toLocaleTimeString()}
                 </Text>
               </View>
             </View>

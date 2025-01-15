@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OneAnother.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using OneAnother.Infrastructure.Data;
 namespace OneAnother.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250115040459_AddNewFieldsToEvent")]
+    partial class AddNewFieldsToEvent
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -212,11 +215,11 @@ namespace OneAnother.Infrastructure.Data.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTimeOffset>("Date")
+                        .HasColumnType("datetimeoffset");
+
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTimeOffset>("EndDate")
-                        .HasColumnType("datetimeoffset");
 
                     b.Property<int>("EventSubType")
                         .HasColumnType("int");
@@ -235,9 +238,6 @@ namespace OneAnother.Infrastructure.Data.Migrations
 
                     b.Property<string>("Speaker")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTimeOffset>("StartDate")
-                        .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");

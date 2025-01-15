@@ -1007,7 +1007,11 @@
             "type": "string",
             "nullable": true
           },
-          "date": {
+          "startDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endDate": {
             "type": "string",
             "format": "date-time"
           },
@@ -1015,8 +1019,15 @@
             "type": "string",
             "nullable": true
           },
-          "type": {
+          "speaker": {
+            "type": "string",
+            "nullable": true
+          },
+          "eventType": {
             "$ref": "#/components/schemas/EventType"
+          },
+          "eventSubType": {
+            "$ref": "#/components/schemas/EventSubType"
           },
           "churchName": {
             "type": "string",
@@ -1028,14 +1039,40 @@
         "type": "integer",
         "description": "",
         "x-enumNames": [
-          "SundayMass",
-          "WeeklySermon",
-          "SpecialService"
+          "Mass",
+          "Meeting",
+          "SpecialEvent"
         ],
         "enum": [
           0,
           1,
           2
+        ]
+      },
+      "EventSubType": {
+        "type": "integer",
+        "description": "",
+        "x-enumNames": [
+          "SundayMass",
+          "WeekdayMass",
+          "RegularMeeting",
+          "YouthMeeting",
+          "Camp",
+          "Retreat",
+          "Conference",
+          "SpecialMass",
+          "Other"
+        ],
+        "enum": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
         ]
       },
       "PaginatedListOfChurchDto": {

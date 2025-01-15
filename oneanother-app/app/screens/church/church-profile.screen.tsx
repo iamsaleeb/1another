@@ -4,76 +4,55 @@ import TopBar from "@/app/components/common/top-bar.component";
 import EventSummaryComponent from "@/app/components/home/event-summary.component";
 import Event from "@/app/data/event.struct";
 import ServiceSchedule from "@/app/data/service-schedule.struct";
+import { ChurchDto, EventDto } from "@/app/services/api/web-api-client";
+import ChurchService from "@/app/services/ChurchService";
 import textStyles from "@/app/styles/common/text.style";
 import styles from "@/app/styles/screens/church-profile.style";
 import colors from "@/app/themes/colors";
-import { Router, useRouter } from "expo-router";
-import React, { useState } from "react";
+import { Router, useLocalSearchParams, useRouter } from "expo-router";
+import React, { useEffect, useState } from "react";
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
-
-const events: Array<Event> = [
-  {
-    id: "0",
-    name: "The Cross of Forgiveness",
-    location: "St Mary & St Mina's Church, Bexley",
-    speaker: "Fr Dan Fanous",
-    time: new Date("2025-05-10T19:30:00"),
-  },
-  {
-    id: "1",
-    name: "Winter Youth Camp",
-    location: "St Mary & Sts Cosman and Demian Church",
-    speaker: "Youthworks Chaldercot",
-    time: new Date("2025-05-10T19:30:00"),
-  },
-  {
-    id: "2",
-    name: "Apologetics for the Resurrection 101",
-    location: "St Mary & St Mina's Church, Arncliffe",
-    speaker: "Bethany Kaldas",
-    time: new Date("2025-10-22T19:30:00"),
-  },
-  {
-    id: "3",
-    name: "Saintly Strokes",
-    location: "Archangel Michael and St Bishoy Church",
-    speaker: "Paid Event",
-    time: new Date("2025-05-10T19:30:00"),
-  },
-  {
-    id: "4",
-    name: "Gospel of St. Luke",
-    location: "St Abanoub and The Holy Apostles Church",
-    speaker: "Mark Shenouda",
-    time: new Date("2025-05-10T19:30:00"),
-  },
-];
-
-const services: Array<ServiceSchedule> = [
-  {
-    id: "0",
-    name: "English Liturgy",
-    startTime: new Date("2025-05-10T07:30:00"),
-    endTime: new Date("2025-05-10T08:30:00"),
-  },
-  {
-    id: "1",
-    name: "Arabic Liturgy",
-    startTime: new Date("2025-05-10T07:30:00"),
-    endTime: new Date("2025-05-10T08:30:00"),
-  },
-  {
-    id: "2",
-    name: "English Liturgy",
-    startTime: new Date("2025-05-10T07:30:00"),
-    endTime: new Date("2025-05-10T08:30:00"),
-  },
-];
 
 const ChurchProfileScreen: React.FC = () => {
   let router: Router = useRouter();
+  const { id } = useLocalSearchParams();
   const [isFollowing, setIsFollowing] = useState(false);
   const [isServicesExpanded, setIsServicesExpanded] = useState(false);
+  const [church, setChurch] = useState<ChurchDto | null>(null);
+  const [events, setEvents] = useState<Array<EventDto>>([]);
+  const [serviceEvents, setServiceEvents] = useState<Array<EventDto>>([]);
+
+  useEffect(() => {
+    const fetchChurch = async () => {
+      if (id) {
+        try {
+          const churchData = await ChurchService.getChurchById(Number(id));
+          const filteredEvents = churchData.events?.filter(
+            (event) => event.eventType !== 1
+          );
+          const filteredServiceEvents = churchData.events?.filter(
+            (event) => event.eventType === 1
+          );
+          setEvents(filteredEvents!);
+          setServiceEvents(filteredServiceEvents!);
+          setChurch(churchData);
+        } catch (error) {
+          console.error("Error fetching church data:", error);
+        }
+      }
+    };
+
+    fetchChurch();
+  }, [id]);
+
+  if (!church) {
+    return (
+      <View style={styles.conatiner}>
+        <Text>Loading...</Text>
+      </View>
+    );
+  }
+
   return (
     <View style={styles.conatiner}>
       <TopBar style={styles.topBar}>
@@ -92,7 +71,7 @@ const ChurchProfileScreen: React.FC = () => {
             style={styles.avatar}
           />
           <Text style={[textStyles.churchProfileName, styles.nameText]}>
-            Archangel Michael & St Bishoy Church
+            {church.name}
           </Text>
           <View style={styles.socialsContainer}>
             <TouchableOpacity>
@@ -141,14 +120,14 @@ const ChurchProfileScreen: React.FC = () => {
           <Text style={textStyles.textInputTitle}>Sunday</Text>
         </View>
         <View style={styles.servicesListContainer}>
-          {services.map((item, index) =>
+          {serviceEvents.map((item, index) =>
             index < 2 || isServicesExpanded ? (
               <ServiceScheduleComponent
                 key={item.id}
                 id={item.id}
-                name={item.name}
-                startTime={item.startTime}
-                endTime={item.endTime}
+                title={item.title}
+                startDate={item.startDate}
+                endDate={item.endDate}
               />
             ) : (
               <View key={item.id} />
@@ -181,10 +160,11 @@ const ChurchProfileScreen: React.FC = () => {
             <EventSummaryComponent
               key={item.id}
               id={item.id}
-              name={item.name}
+              title={item.title}
+              churchName={item.churchName}
               location={item.location}
               speaker={item.speaker}
-              time={item.time}
+              startDate={item.startDate}
             />
           ))}
         </View>

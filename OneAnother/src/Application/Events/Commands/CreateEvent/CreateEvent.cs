@@ -27,9 +27,9 @@ public class CreateEventCommandHandler : IRequestHandler<CreateEventCommand, int
         {
             Title = request.Title,
             Description = request.Description,
-            Date = request.Date,
+            StartDate = request.Date,
             Location = request.Location,
-            Type = request.Type,
+            EventType = request.Type,
             Church = await _context.Churches.FindAsync(request.ChurchId) ?? throw new NotFoundException(nameof(Church), request.ChurchId.ToString())
         };
 

@@ -13,21 +13,37 @@ const formatTime = (time: Date) => {
 
   const weekday = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
   const month = [
-    "JAN", "FEB", "MAR", "APR", "MAY", "JUN",
-    "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"
+    "JAN",
+    "FEB",
+    "MAR",
+    "APR",
+    "MAY",
+    "JUN",
+    "JUL",
+    "AUG",
+    "SEP",
+    "OCT",
+    "NOV",
+    "DEC",
   ];
   const hours = time.getHours();
   const minutes = time.getMinutes();
-  const formattedTime = `${hours % 12 || 12}:${minutes < 10 ? '0' : ''}${minutes} ${hours < 12 ? 'AM' : 'PM'}`;
+  const formattedTime = `${hours % 12 || 12}:${
+    minutes < 10 ? "0" : ""
+  }${minutes} ${hours < 12 ? "AM" : "PM"}`;
 
-  return `${weekday[time.getDay()]}, ${time.getDate()} ${month[time.getMonth()]} | ${formattedTime}`;
+  return `${weekday[time.getDay()]}, ${time.getDate()} ${
+    month[time.getMonth()]
+  } | ${formattedTime}`;
 };
 
 const EventSummaryComponent: React.FC<IEventDto> = ({
   id,
   title,
   churchName,
-  date,
+  speaker,
+  startDate,
+  endDate,
 }) => {
   let router: Router = useRouter();
   return (
@@ -38,10 +54,10 @@ const EventSummaryComponent: React.FC<IEventDto> = ({
         router.push(`/screens/my-events/event-details.screen?id=${id}`);
       }}
     >
-      <Text style={textStyles.timeText}>{formatTime(new Date(date!))}</Text>
+      <Text style={textStyles.timeText}>{formatTime(new Date(startDate!))}</Text>
       <Text style={textStyles.midTitle}>{title}</Text>
       <Text style={textStyles.textInputTitle}>{churchName}</Text>
-      <Text style={textStyles.subText}>{"test speaker for now"}</Text>
+      <Text style={textStyles.subText}>{speaker}</Text>
       <TouchableOpacity style={styles.shareTouchable}>
         <Image
           style={styles.shareImage}

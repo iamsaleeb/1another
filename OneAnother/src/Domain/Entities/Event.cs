@@ -9,9 +9,12 @@ public class Event : BaseAuditableEntity
 {
     public string? Title { get; set; }
     public string? Description { get; set; }
-    public DateTimeOffset Date { get; set; }
+    public DateTimeOffset StartDate { get; set; }
+    public DateTimeOffset EndDate { get; set; }
     public string? Location { get; set; }
-    public EventType Type { get; set; }
+    public string? Speaker { get; set; }
+    public EventType EventType { get; set; }
+    public EventSubType EventSubType { get; set; }
     public Church Church { get; set; } = null!;
     //public List<string> SavedUsers { get; set; } = new();
 }

@@ -49,8 +49,8 @@ const ExploreScreen: React.FC = () => {
               title={item.title}
               location={item.location}
               churchName={item.churchName}
-              //speaker={item.speaker}
-              date={item.date}
+              speaker={item.speaker}
+              startDate={item.startDate}
             />
           )}
         />
