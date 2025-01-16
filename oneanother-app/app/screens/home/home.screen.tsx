@@ -69,7 +69,7 @@ const HomeScreen: React.FC = () => {
         ) : (
           <View style={[cardStyles.card, styles.noEntryContainer]}>
             <Image
-              source={require("@/assets/images/icons/church-orange-icon.png")}
+              source={require("@/assets/images/icons/church-orange-icon.svg")}
             />
             <Text style={[textStyles.midTitle, styles.noEntryTitle]}>
               Start following churches to see their events on your Homepage

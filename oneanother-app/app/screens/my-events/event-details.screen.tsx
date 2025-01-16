@@ -82,7 +82,7 @@ const EventDetailsScreen: React.FC = () => {
             <Text style={textStyles.midTitle}>{event?.title}</Text>
             <View style={styles.cardInfoRowContainer}>
               <Image
-                source={require("@/assets/images/icons/church-orange-event-icon.png")}
+                source={require("@/assets/images/icons/church-orange-event-icon.svg")}
                 style={styles.cardInfoRowIcon}
               />
               <View style={styles.cardInfoRowDescriptionContainer}>
@@ -94,7 +94,7 @@ const EventDetailsScreen: React.FC = () => {
             </View>
             <View style={styles.cardInfoRowContainer}>
               <Image
-                source={require("@/assets/images/icons/calendar-orange-icon.png")}
+                source={require("@/assets/images/icons/calender-orange-icon.svg")}
                 style={styles.cardInfoRowIcon}
               />
               <View style={styles.cardInfoRowDescriptionContainer}>
@@ -106,7 +106,7 @@ const EventDetailsScreen: React.FC = () => {
             </View>
             <View style={styles.cardInfoRowContainer}>
               <Image
-                source={require("@/assets/images/icons/time-orange-icon.png")}
+                source={require("@/assets/images/icons/time-orange-icon.svg")}
                 style={styles.cardInfoRowIcon}
               />
               <View style={styles.cardInfoRowDescriptionContainer}>
@@ -118,7 +118,7 @@ const EventDetailsScreen: React.FC = () => {
             </View>
             <View style={styles.cardInfoRowContainer}>
               <Image
-                source={require("@/assets/images/icons/location-orange-icon.png")}
+                source={require("@/assets/images/icons/location-orange-icon.svg")}
                 style={styles.cardInfoRowIcon}
               />
               <View style={styles.cardInfoRowDescriptionContainer}>
