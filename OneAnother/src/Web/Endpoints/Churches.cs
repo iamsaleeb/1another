@@ -1,6 +1,7 @@
 ﻿
 using Microsoft.AspNetCore.Http.HttpResults;
 using OneAnother.Application.Churches.Commands.FollowChurch;
+using OneAnother.Application.Churches.Commands.UnFollowChurch;
 using OneAnother.Application.Churches.Queries.GetChurch;
 using OneAnother.Application.Churches.Queries.GetChurchesWithPagination;
 using OneAnother.Application.Common.Models;
@@ -14,7 +15,8 @@ public class Churches : EndpointGroupBase
         app.MapGroup(this)
             .MapGet(GetChurch, "{Id}")
             .MapGet(GetChurchesWithPagination)
-            .MapPost(FollowChurch, "follow");
+            .MapPost(FollowChurch, "follow")
+            .MapPost(UnFollowChurch, "unfollow");
     }
 
     public async Task<Ok<PaginatedList<ChurchDto>>> GetChurchesWithPagination(ISender sender, [AsParameters] GetChurchesWithPaginationQuery query)
@@ -30,6 +32,12 @@ public class Churches : EndpointGroupBase
     }
 
     public async Task<Ok> FollowChurch(ISender sender, [AsParameters] FollowChurchCommand command)
+    {
+        await sender.Send(command);
+        return TypedResults.Ok();
+    }
+
+    public async Task<Ok> UnFollowChurch(ISender sender, [AsParameters] UnFollowChurchCommand command)
     {
         await sender.Send(command);
         return TypedResults.Ok();

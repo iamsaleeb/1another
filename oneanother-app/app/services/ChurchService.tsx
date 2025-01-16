@@ -3,12 +3,13 @@ import {
   ChurchDto,
   PaginatedListOfChurchDto,
 } from "@/app/services/api/web-api-client";
+import HttpClient from "./HttpClient";
 
 class ChurchService {
   private churchesClient: ChurchesClient;
 
   constructor() {
-    this.churchesClient = new ChurchesClient("https://localhost:5001");
+    this.churchesClient = new ChurchesClient("https://localhost:5001", HttpClient);
   }
 
   async getChurchById(id: number): Promise<ChurchDto> {
@@ -37,6 +38,25 @@ class ChurchService {
       throw error;
     }
   }
+
+  async followChurch(id: number): Promise<void> {
+    try {
+      await this.churchesClient.followChurch(id);
+    } catch (error) {
+      console.error("Error following church:", error);
+      throw error;
+    }
+  }
+
+  async unfollowChurch(id: number): Promise<void> {
+    try {
+      await this.churchesClient.unFollowChurch(id);
+    } catch (error) {
+      console.error("Error unfollowing church:", error);
+      throw error;
+    }
+  }
+
 }
 
 export default new ChurchService();

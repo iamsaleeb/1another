@@ -105,6 +105,31 @@
         }
       }
     },
+    "/api/Churches/unfollow": {
+      "post": {
+        "tags": [
+          "Churches"
+        ],
+        "operationId": "UnFollowChurch",
+        "parameters": [
+          {
+            "name": "ChurchId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
     "/api/Events/{Id}": {
       "get": {
         "tags": [
@@ -1028,6 +1053,9 @@
             "items": {
               "$ref": "#/components/schemas/EventDto"
             }
+          },
+          "isFollowed": {
+            "type": "boolean"
           }
         }
       },

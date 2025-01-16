@@ -36,6 +36,7 @@ const ChurchProfileScreen: React.FC = () => {
           setEvents(filteredEvents!);
           setServiceEvents(filteredServiceEvents!);
           setChurch(churchData);
+          setIsFollowing(churchData.isFollowed ?? false);
         } catch (error) {
           console.error("Error fetching church data:", error);
         }
@@ -44,6 +45,21 @@ const ChurchProfileScreen: React.FC = () => {
 
     fetchChurch();
   }, [id]);
+
+  const handleFollow = async () => {
+    if (id) {
+      try {
+        if (isFollowing) {
+          await ChurchService.unfollowChurch(Number(id));
+        } else {
+          await ChurchService.followChurch(Number(id));
+        }
+        setIsFollowing(!isFollowing);
+      } catch (error) {
+        console.error("Error updating follow status:", error);
+      }
+    }
+  };
 
   if (!church) {
     return (
@@ -93,27 +109,14 @@ const ChurchProfileScreen: React.FC = () => {
               />
             </TouchableOpacity>
           </View>
-          {isFollowing ? (
-            <SecondaryButton
-              onPress={() => {
-                setIsFollowing(!isFollowing);
-              }}
-              text="Following"
-              color={colors.primary}
-              textColor={colors.secondary}
-              fill={false}
-              style={styles.followButton}
-            />
-          ) : (
-            <SecondaryButton
-              onPress={() => {
-                setIsFollowing(!isFollowing);
-              }}
-              text="Follow"
-              fill={false}
-              style={styles.followButton}
-            />
-          )}
+          <SecondaryButton
+            onPress={handleFollow}
+            text={isFollowing ? "Following" : "Follow"}
+            color={isFollowing ? colors.primary : undefined}
+            textColor={isFollowing ? colors.secondary : undefined}
+            fill={false}
+            style={styles.followButton}
+          />
         </View>
         <View style={styles.servicesTitleContainer}>
           <Text style={textStyles.midTitle}>Service Schedule</Text>
