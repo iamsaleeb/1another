@@ -169,7 +169,7 @@ const ChurchesScreen: React.FC = () => {
             <ChurchThumbnailComponent
               id={item.id}
               name={item.name}
-              //image={item.image}
+            //image={item.image}
             />
           )}
         />

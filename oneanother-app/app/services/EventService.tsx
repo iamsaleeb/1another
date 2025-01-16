@@ -28,6 +28,16 @@ class EventService {
     }
   }
 
+  async getUserEvents(pageNumber: number, pageSize: number): Promise<PaginatedListOfEventDto> {
+    try {
+      const paginatedUserEvents = await this.eventsClient.getUserEventsWithPagination(pageNumber, pageSize);
+      return paginatedUserEvents;
+    } catch (error) {
+      console.error("Error fetching user events:", error);
+      throw error;
+    }
+  }
+
   async followEvent(eventId: number): Promise<void> {
     try {
       await this.eventsClient.followEvent(eventId);

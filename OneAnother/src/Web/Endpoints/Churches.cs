@@ -1,5 +1,4 @@
-﻿
-using Microsoft.AspNetCore.Http.HttpResults;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
 using OneAnother.Application.Churches.Commands.FollowChurch;
 using OneAnother.Application.Churches.Commands.UnFollowChurch;
 using OneAnother.Application.Churches.Queries.GetChurch;
