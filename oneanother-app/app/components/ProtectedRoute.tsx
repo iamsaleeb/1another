@@ -8,9 +8,17 @@ interface ProtectedRouteProps {
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
     useEffect(() => {
-        if (!AuthService.isAuthenticated()) {
-            router.replace("/screens/login/login.screen");
-        }
+        const checkAuthentication = async () => {
+            try {
+                await AuthService.refreshToken();
+            } catch (error) {
+                if (!AuthService.isAuthenticated()) {
+                    router.replace("/screens/login/login.screen");
+                }
+            }
+        };
+
+        checkAuthentication();
     }, []);
 
     return <>{children}</>;
