@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Http.HttpResults;
 using OneAnother.Application.Common.Models;
 using OneAnother.Application.Events.Commands.CreateEvent;
+using OneAnother.Application.Events.Commands.FollowEvent;
+using OneAnother.Application.Events.Commands.UnFollowEvent;
 using OneAnother.Application.Events.Queries;
 using OneAnother.Application.Events.Queries.GetEventsWithPagination;
 
@@ -15,7 +17,9 @@ public class Events : EndpointGroupBase
             .RequireAuthorization()
             .MapGet(GetEvent, "{Id}")
             .MapGet(GetEventsWithPagination)
-            .MapPost(CreateEvent);
+            .MapPost(CreateEvent)
+            .MapPost(FollowEvent, "follow")
+            .MapPost(UnFollowEvent, "unfollow");
     }
 
     public async Task<Ok<PaginatedList<EventDto>>> GetEventsWithPagination(ISender sender, [AsParameters] GetEventsWithPaginationQuery query)
@@ -35,5 +39,17 @@ public class Events : EndpointGroupBase
         var id = await sender.Send(command);
 
         return TypedResults.Created($"/{nameof(Events)}/{id}", id);
+    }
+
+    public async Task<Ok> FollowEvent(ISender sender, [AsParameters] FollowEventCommand command)
+    {
+        await sender.Send(command);
+        return TypedResults.Ok();
+    }
+
+    public async Task<Ok> UnFollowEvent(ISender sender, [AsParameters] UnFollowEventCommand command)
+    {
+        await sender.Send(command);
+        return TypedResults.Ok();
     }
 }

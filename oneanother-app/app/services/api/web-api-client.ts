@@ -293,6 +293,74 @@ export class EventsClient {
         }
         return Promise.resolve<number>(null as any);
     }
+
+    followEvent(eventId: number): Promise<void> {
+        let url_ = this.baseUrl + "/api/Events/follow?";
+        if (eventId === undefined || eventId === null)
+            throw new Error("The parameter 'eventId' must be defined and cannot be null.");
+        else
+            url_ += "EventId=" + encodeURIComponent("" + eventId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "POST",
+            headers: {
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processFollowEvent(_response);
+        });
+    }
+
+    protected processFollowEvent(response: Response): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            return;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<void>(null as any);
+    }
+
+    unFollowEvent(eventId: number): Promise<void> {
+        let url_ = this.baseUrl + "/api/Events/unfollow?";
+        if (eventId === undefined || eventId === null)
+            throw new Error("The parameter 'eventId' must be defined and cannot be null.");
+        else
+            url_ += "EventId=" + encodeURIComponent("" + eventId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "POST",
+            headers: {
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processUnFollowEvent(_response);
+        });
+    }
+
+    protected processUnFollowEvent(response: Response): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            return;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<void>(null as any);
+    }
 }
 
 export class TodoItemsClient {
