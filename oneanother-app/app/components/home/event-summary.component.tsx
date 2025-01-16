@@ -61,7 +61,7 @@ const EventSummaryComponent: React.FC<IEventDto> = ({
       <TouchableOpacity style={styles.shareTouchable}>
         <Image
           style={styles.shareImage}
-          source={require("@/assets/images/icons/share-grey-icon.png")}
+          source={require("@/assets/images/icons/share-grey-icon.svg")}
         />
       </TouchableOpacity>
     </TouchableOpacity>
