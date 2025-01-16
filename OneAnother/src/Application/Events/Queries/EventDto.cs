@@ -14,6 +14,7 @@ public class EventDto
     public EventType EventType { get; set; }
     public EventSubType EventSubType { get; set; }
     public string? ChurchName { get; set; }
+    public bool IsAttending { get; set; }
     private class Mapping : Profile
     {
         public Mapping()

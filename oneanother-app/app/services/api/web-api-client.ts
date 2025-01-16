@@ -1298,6 +1298,7 @@ export class EventDto implements IEventDto {
     eventType?: EventType;
     eventSubType?: EventSubType;
     churchName?: string | undefined;
+    isAttending?: boolean;
 
     constructor(data?: IEventDto) {
         if (data) {
@@ -1320,6 +1321,7 @@ export class EventDto implements IEventDto {
             this.eventType = _data["eventType"];
             this.eventSubType = _data["eventSubType"];
             this.churchName = _data["churchName"];
+            this.isAttending = _data["isAttending"];
         }
     }
 
@@ -1342,6 +1344,7 @@ export class EventDto implements IEventDto {
         data["eventType"] = this.eventType;
         data["eventSubType"] = this.eventSubType;
         data["churchName"] = this.churchName;
+        data["isAttending"] = this.isAttending;
         return data;
     }
 }
@@ -1357,6 +1360,7 @@ export interface IEventDto {
     eventType?: EventType;
     eventSubType?: EventSubType;
     churchName?: string | undefined;
+    isAttending?: boolean;
 }
 
 export enum EventType {

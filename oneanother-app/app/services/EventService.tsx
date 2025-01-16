@@ -27,6 +27,24 @@ class EventService {
       throw error;
     }
   }
+
+  async followEvent(eventId: number): Promise<void> {
+    try {
+      await this.eventsClient.followEvent(eventId);
+    } catch (error) {
+      console.error("Error following event:", error);
+      throw error;
+    }
+  }
+
+  async unfollowEvent(eventId: number): Promise<void> {
+    try {
+      await this.eventsClient.unFollowEvent(eventId);
+    } catch (error) {
+      console.error("Error unfollowing event:", error);
+      throw error;
+    }
+  }
 }
 
 export default new EventService();

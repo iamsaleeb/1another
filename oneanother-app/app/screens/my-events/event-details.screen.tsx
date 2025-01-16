@@ -22,6 +22,7 @@ const EventDetailsScreen: React.FC = () => {
         try {
           const eventData = await EventService.getEventById(Number(id));
           setEvent(eventData);
+          setIsSaved(eventData.isAttending || false);
           console.log("Event data:", eventData);
         } catch (error) {
           console.error("Error fetching event data:", error);
@@ -31,6 +32,21 @@ const EventDetailsScreen: React.FC = () => {
 
     fetchEvent();
   }, [id]);
+
+  const handleSaveEvent = async () => {
+    if (event) {
+      try {
+        if (isSaved) {
+          await EventService.unfollowEvent(event.id!);
+        } else {
+          await EventService.followEvent(event.id!);
+        }
+        setIsSaved(!isSaved);
+      } catch (error) {
+        console.error("Error saving event:", error);
+      }
+    }
+  };
 
   if (!event) {
     return (
@@ -121,9 +137,7 @@ const EventDetailsScreen: React.FC = () => {
           <SecondaryButton
             style={styles.saveButton}
             text="SAVED"
-            onPress={() => {
-              setIsSaved(!isSaved);
-            }}
+            onPress={handleSaveEvent}
             children={
               <Image
                 style={styles.saveIcon}
@@ -137,9 +151,7 @@ const EventDetailsScreen: React.FC = () => {
           <SecondaryButton
             style={styles.saveButton}
             text="SAVE"
-            onPress={() => {
-              setIsSaved(!isSaved);
-            }}
+            onPress={handleSaveEvent}
             children={
               <Image
                 style={styles.saveIcon}

@@ -1160,6 +1160,9 @@
           "churchName": {
             "type": "string",
             "nullable": true
+          },
+          "isAttending": {
+            "type": "boolean"
           }
         }
       },
