@@ -12,6 +12,7 @@ public class Events : EndpointGroupBase
     public override void Map(WebApplication app)
     {
         app.MapGroup(this)
+            .RequireAuthorization()
             .MapGet(GetEvent, "{Id}")
             .MapGet(GetEventsWithPagination)
             .MapPost(CreateEvent);

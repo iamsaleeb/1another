@@ -1,10 +1,11 @@
 import { EventsClient, EventDto, PaginatedListOfEventDto } from "@/app/services/api/web-api-client";
+import HttpClient from "@/app/services/HttpClient";
 
 class EventService {
   private eventsClient: EventsClient;
 
   constructor() {
-    this.eventsClient = new EventsClient("https://localhost:5001");
+    this.eventsClient = new EventsClient("https://localhost:5001", HttpClient);
   }
 
   async getEventById(id: number): Promise<EventDto> {

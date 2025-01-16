@@ -4,13 +4,22 @@ import PrimaryButton from "@/app/components/common/primary-button.component";
 import SecondaryButton from "@/app/components/common/secondary-button.component";
 import textStyles from "@/app/styles/common/text.style";
 import colors from "@/app/themes/colors";
+import AuthService from "@/app/services/AuthService";
+import { router } from "expo-router";
 
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState<string | null>(null);
 
-  const handleLogin = () => {
-    // Handle login logic here
+  const handleLogin = async () => {
+    try {
+      setError(null);
+      await AuthService.login(email, password);
+      router.replace("/screens/main/main.screen");
+    } catch (error) {
+      setError("Login failed. Please check your credentials and try again.");
+    }
   };
 
   return (

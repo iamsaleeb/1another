@@ -1,3 +1,4 @@
+import ProtectedRoute from "@/app/components/ProtectedRoute";
 import ChurchesStack from "@/app/screens/church/church-stack";
 import ExploreScreen from "@/app/screens/explore/explore.screen";
 import HomeScreen from "@/app/screens/home/home.screen";
@@ -22,40 +23,42 @@ const Tab = createBottomTabNavigator();
 
 const MainScreen: React.FC = () => {
   return (
-    <View style={styles.container}>
-      <Tab.Navigator
-        screenOptions={({ route }) => ({
-          tabBarIcon: ({ focused }) => {
-            let iconImage: ImageSourcePropType = homeIconSelected;
-            if (route.name === "Home")
-              iconImage = focused ? homeIconSelected : homeIconUnselected;
-            else if (route.name === "Churches")
-              iconImage = focused
-                ? churchesIconSelected
-                : churchesIconUnselected;
-            else if (route.name === "Explore")
-              iconImage = focused ? browseIconSelected : browseIconUnselected;
-            else if (route.name === "Events")
-              iconImage = focused ? eventsIconSelected : eventsIconUnselected;
-            else if (route.name === "Notifications")
-              iconImage = focused
-                ? notificationIconSelected
-                : notificationIconUnselected;
-            return <Image source={iconImage} style={styles.screenIcon} />;
-          },
-          tabBarShowLabel: false,
-          headerShown: false,
-          tabBarStyle: styles.tabBar,
-          tabBarIconStyle: styles.tabBarIcon,
-        })}
-      >
-        <Tab.Screen name="Home" component={HomeScreen} />
-        <Tab.Screen name="Churches" component={ChurchesStack} />
-        <Tab.Screen name="Explore" component={ExploreScreen} />
-        <Tab.Screen name="Events" component={EventsScreen} />
-        <Tab.Screen name="Notifications" component={HomeScreen} />
-      </Tab.Navigator>
-    </View>
+    <ProtectedRoute>
+      <View style={styles.container}>
+        <Tab.Navigator
+          screenOptions={({ route }) => ({
+            tabBarIcon: ({ focused }) => {
+              let iconImage: ImageSourcePropType = homeIconSelected;
+              if (route.name === "Home")
+                iconImage = focused ? homeIconSelected : homeIconUnselected;
+              else if (route.name === "Churches")
+                iconImage = focused
+                  ? churchesIconSelected
+                  : churchesIconUnselected;
+              else if (route.name === "Explore")
+                iconImage = focused ? browseIconSelected : browseIconUnselected;
+              else if (route.name === "Events")
+                iconImage = focused ? eventsIconSelected : eventsIconUnselected;
+              else if (route.name === "Notifications")
+                iconImage = focused
+                  ? notificationIconSelected
+                  : notificationIconUnselected;
+              return <Image source={iconImage} style={styles.screenIcon} />;
+            },
+            tabBarShowLabel: false,
+            headerShown: false,
+            tabBarStyle: styles.tabBar,
+            tabBarIconStyle: styles.tabBarIcon,
+          })}
+        >
+          <Tab.Screen name="Home" component={HomeScreen} />
+          <Tab.Screen name="Churches" component={ChurchesStack} />
+          <Tab.Screen name="Explore" component={ExploreScreen} />
+          <Tab.Screen name="Events" component={EventsScreen} />
+          <Tab.Screen name="Notifications" component={HomeScreen} />
+        </Tab.Navigator>
+      </View>
+    </ProtectedRoute>
   );
 };
 
