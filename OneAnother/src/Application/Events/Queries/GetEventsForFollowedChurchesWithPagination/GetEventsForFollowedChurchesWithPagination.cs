@@ -29,11 +29,12 @@ public class GetEventsForFollowedChurchesWithPaginationQueryHandler : IRequestHa
             .Select(x => x.Id)
             .ToListAsync(cancellationToken);
 
-        var events = _context.Events
-            .Where(e => followedChurchIds.Contains(e.Id))
-            .OrderBy(e => e.StartDate);
-
-        return await events.ProjectTo<EventDto>(_mapper.ConfigurationProvider)
+        var events = await _context.Events
+            .Where(e => followedChurchIds.Contains(e.Church.Id))
+            .OrderBy(e => e.StartDate)
+            .ProjectTo<EventDto>(_mapper.ConfigurationProvider)
             .PaginatedListAsync(request.PageNumber, request.PageSize);
+
+        return events;
     }
 }

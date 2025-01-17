@@ -1,4 +1,8 @@
-import { EventsClient, EventDto, PaginatedListOfEventDto } from "@/app/services/api/web-api-client";
+import {
+  EventsClient,
+  EventDto,
+  PaginatedListOfEventDto,
+} from "@/app/services/api/web-api-client";
 import HttpClient from "@/app/services/HttpClient";
 
 class EventService {
@@ -18,9 +22,15 @@ class EventService {
     }
   }
 
-  async getPaginatedEvents(pageNumber: number, pageSize: number): Promise<PaginatedListOfEventDto> {
+  async getPaginatedEvents(
+    pageNumber: number,
+    pageSize: number
+  ): Promise<PaginatedListOfEventDto> {
     try {
-      const paginatedEvents = await this.eventsClient.getEventsWithPagination(pageNumber, pageSize);
+      const paginatedEvents = await this.eventsClient.getEventsWithPagination(
+        pageNumber,
+        pageSize
+      );
       return paginatedEvents;
     } catch (error) {
       console.error("Error fetching paginated events:", error);
@@ -28,9 +38,33 @@ class EventService {
     }
   }
 
-  async getUserEvents(pageNumber: number, pageSize: number): Promise<PaginatedListOfEventDto> {
+  async getEventsForFollowedChurches(
+    pageNumber: number,
+    pageSize: number
+  ): Promise<PaginatedListOfEventDto> {
     try {
-      const paginatedUserEvents = await this.eventsClient.getUserEventsWithPagination(pageNumber, pageSize);
+      const paginatedFollowedEvents =
+        await this.eventsClient.getEventsForFollowedChurches(
+          pageNumber,
+          pageSize
+        );
+      return paginatedFollowedEvents;
+    } catch (error) {
+      console.error("Error fetching events for followed churches:", error);
+      throw error;
+    }
+  }
+
+  async getUserEvents(
+    pageNumber: number,
+    pageSize: number
+  ): Promise<PaginatedListOfEventDto> {
+    try {
+      const paginatedUserEvents =
+        await this.eventsClient.getUserEventsWithPagination(
+          pageNumber,
+          pageSize
+        );
       return paginatedUserEvents;
     } catch (error) {
       console.error("Error fetching user events:", error);

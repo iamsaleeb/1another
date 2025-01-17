@@ -1,51 +1,33 @@
 import EventSummaryComponent from "@/app/components/home/event-summary.component";
 import MainTopBar from "@/app/components/top-bar/main-top-bar";
 import Event from "@/app/data/event.struct";
+import { EventDto } from "@/app/services/api/web-api-client";
+import EventService from "@/app/services/EventService";
 import cardStyles from "@/app/styles/common/card.style";
 import textStyles from "@/app/styles/common/text.style";
 import styles from "@/app/styles/screens/home.style";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FlatList, Image, Text, View } from "react-native";
 
-const events: Array<Event> = [
-  {
-    id: "0",
-    name: "The Cross of Forgiveness",
-    location: "St Mary & St Mina's Church, Bexley",
-    speaker: "Fr Dan Fanous",
-    time: new Date("2025-05-10T19:30:00"),
-  },
-  {
-    id: "1",
-    name: "Winter Youth Camp",
-    location: "St Mary & Sts Cosman and Demian Church",
-    speaker: "Youthworks Chaldercot",
-    time: new Date("2025-05-10T19:30:00"),
-  },
-  {
-    id: "2",
-    name: "Apologetics for the Resurrection 101",
-    location: "St Mary & St Mina's Church, Arncliffe",
-    speaker: "Bethany Kaldas",
-    time: new Date("2025-10-22T19:30:00"),
-  },
-  {
-    id: "3",
-    name: "Saintly Strokes",
-    location: "Archangel Michael and St Bishoy Church",
-    speaker: "Paid Event",
-    time: new Date("2025-05-10T19:30:00"),
-  },
-  {
-    id: "4",
-    name: "Gospel of St. Luke",
-    location: "St Abanoub and The Holy Apostles Church",
-    speaker: "Mark Shenouda",
-    time: new Date("2025-05-10T19:30:00"),
-  },
-];
-
 const HomeScreen: React.FC = () => {
+  const [events, setEvents] = useState<Array<EventDto>>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const paginatedEvents = await EventService.getEventsForFollowedChurches(1, 10);
+        setEvents(paginatedEvents.items || []);
+      } catch (error) {
+        console.error("Error fetching events:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchEvents();
+  }, []);
+
   return (
     <View style={{ flex: 1 }}>
       <MainTopBar />
@@ -55,14 +37,14 @@ const HomeScreen: React.FC = () => {
           <FlatList
             style={styles.flatList}
             data={events}
-            keyExtractor={(item) => item.id}
+            keyExtractor={(item) => item.id!.toString()}
             renderItem={({ item }) => (
               <EventSummaryComponent
                 id={item.id}
-                name={item.name}
+                title={item.title}
                 location={item.location}
                 speaker={item.speaker}
-                time={item.time}
+                startDate={item.startDate}
               />
             )}
           />
