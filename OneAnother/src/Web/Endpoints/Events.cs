@@ -4,6 +4,7 @@ using OneAnother.Application.Events.Commands.CreateEvent;
 using OneAnother.Application.Events.Commands.FollowEvent;
 using OneAnother.Application.Events.Commands.UnFollowEvent;
 using OneAnother.Application.Events.Queries;
+using OneAnother.Application.Events.Queries.GetEventsForFollowedChurchesWithPagination;
 using OneAnother.Application.Events.Queries.GetEventsWithPagination;
 using OneAnother.Application.Events.Queries.GetUserEventsWithPagination;
 
@@ -18,6 +19,7 @@ public class Events : EndpointGroupBase
             .MapGet(GetEvent, "{Id}")
             .MapGet(GetEventsWithPagination)
             .MapGet(GetUserEventsWithPagination, "user")
+            .MapGet(GetEventsForFollowedChurches, "followed")
             .MapPost(CreateEvent)
             .MapPost(FollowEvent, "follow")
             .MapPost(UnFollowEvent, "unfollow");
@@ -55,6 +57,12 @@ public class Events : EndpointGroupBase
     }
 
     public async Task<Ok<PaginatedList<EventDto>>> GetUserEventsWithPagination(ISender sender, [AsParameters] GetUserEventsWithPaginationQuery query)
+    {
+        var result = await sender.Send(query);
+        return TypedResults.Ok(result);
+    }
+
+    public async Task<Ok<PaginatedList<EventDto>>> GetEventsForFollowedChurches(ISender sender, [AsParameters] GetEventsForFollowedChurchesWithPaginationQuery query)
     {
         var result = await sender.Send(query);
         return TypedResults.Ok(result);
