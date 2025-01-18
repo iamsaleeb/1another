@@ -1,14 +1,13 @@
-import textStyles from "@/app/styles/common/text.style";
 import colors from "@/app/themes/colors";
 import React from "react";
-import { Text, TextInput, TextStyle, View, ViewStyle } from "react-native";
+import { Text, TextInput, TextStyle, View, ViewStyle, StyleSheet } from "react-native";
 
 interface LabledTextInputProps {
   containerStyle?: ViewStyle;
   style: TextStyle;
   textStyle: TextStyle;
   label: string;
-  hint: string;
+  placeholder: string;
   disabled: boolean;
   value: string;
   onChangeText: (text: string) => void;
@@ -19,7 +18,7 @@ const LabelledTextInput: React.FC<LabledTextInputProps> = ({
   style,
   textStyle,
   label,
-  hint,
+  placeholder,
   disabled,
   containerStyle,
   value,
@@ -28,18 +27,18 @@ const LabelledTextInput: React.FC<LabledTextInputProps> = ({
 }) => {
   return (
     <View style={[{ flex: 1 }, containerStyle]}>
-      <Text style={[textStyle, textStyles.textInputTitle]}>{label}</Text>
+      <Text style={[textStyle, styles.inputLabel]}>{label}</Text>
       <TextInput
         style={[
           style,
-          textStyles.inputText,
+          styles.inputText,
           {
             backgroundColor: disabled
               ? colors.disabledTextInput
               : colors.secondary,
           },
         ]}
-        placeholder={hint}
+        placeholder={placeholder}
         editable={!disabled}
         value={value}
         onChangeText={onChangeText}
@@ -48,5 +47,25 @@ const LabelledTextInput: React.FC<LabledTextInputProps> = ({
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  inputText: {
+    borderWidth: 1,
+    borderRadius: 4,
+    borderColor: colors.border,
+    paddingLeft: 8,
+    marginTop: 8,
+    fontWeight: 400,
+    fontFamily: "Inter",
+    fontSize: 14,
+    color: colors.hintText,
+  },
+  inputLabel: {
+    fontWeight: 700,
+    fontFamily: "Inter",
+    fontSize: 12,
+    color: colors.greyText,
+  },
+});
 
 export default LabelledTextInput;

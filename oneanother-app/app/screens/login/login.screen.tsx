@@ -35,7 +35,7 @@ const LoginScreen = () => {
           <LabelledTextInput
             style={styles.fill}
             textStyle={{}}
-            hint="Email"
+            placeholder="Email"
             label="Email"
             disabled={false}
             onChangeText={setEmail}
@@ -45,7 +45,7 @@ const LoginScreen = () => {
           <LabelledTextInput
             style={styles.fill}
             textStyle={{}}
-            hint="Password"
+            placeholder="Password"
             label="Password"
             disabled={false}
             value={password}
