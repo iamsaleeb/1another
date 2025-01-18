@@ -10,15 +10,21 @@ interface LabledTextInputProps {
   label: string;
   hint: string;
   disabled: boolean;
+  value: string;
+  onChangeText: (text: string) => void;
+  keyboardType?: 'default' | 'email-address' | 'numeric' | 'phone-pad' | 'number-pad' | 'decimal-pad' | 'url' | 'visible-password';
 }
 
-const LabledTextInput: React.FC<LabledTextInputProps> = ({
+const LabelledTextInput: React.FC<LabledTextInputProps> = ({
   style,
   textStyle,
   label,
   hint,
   disabled,
   containerStyle,
+  value,
+  onChangeText,
+  keyboardType = 'default',
 }) => {
   return (
     <View style={[{ flex: 1 }, containerStyle]}>
@@ -35,9 +41,12 @@ const LabledTextInput: React.FC<LabledTextInputProps> = ({
         ]}
         placeholder={hint}
         editable={!disabled}
+        value={value}
+        onChangeText={onChangeText}
+        keyboardType={keyboardType}
       />
     </View>
   );
 };
 
-export default LabledTextInput;
+export default LabelledTextInput;
