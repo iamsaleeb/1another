@@ -1,4 +1,4 @@
-import OnboardingScreenOne from "@/app/screens/onboarding/onboarding-screen-one.screen";
+import OnboardingScreenOne from "@/app/(onboarding)/onboarding-screen-one.screen";
 import { useFonts } from "expo-font";
 import React from "react";
 
