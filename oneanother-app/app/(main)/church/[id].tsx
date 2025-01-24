@@ -202,7 +202,6 @@ const ChurchDetailsScreen: React.FC = () => {
   return (
     <View style={stylesApp.viewContainer}>
       <SectionList
-        contentContainerStyle={styles.contentCtnList}
         ListHeaderComponent={headerList()}
         stickySectionHeadersEnabled={false}
         keyExtractor={(item, index) => `section${index}`}
@@ -223,7 +222,6 @@ import EventItem from "@/components/events/EventItem/EventItem";
 
 export const styles = StyleSheet.create({
   contentCtnList: {
-    padding: 24,
   },
 
   viewChurchInfo: {

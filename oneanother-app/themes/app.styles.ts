@@ -5,7 +5,7 @@ export const stylesApp = StyleSheet.create({
   viewContainer: {
     flex: 1,
     backgroundColor: colorTheme.background,
-    padding: 16,
+    padding: 20,
   },
 
   //
