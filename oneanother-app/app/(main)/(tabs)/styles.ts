@@ -28,7 +28,7 @@ export const styles = StyleSheet.create({
     fontWeight: "800",
     fontSize: 33,
     lineHeight: 38,
+    marginBottom: 16,
     color: colorTheme.black,
-    padding: 16,
   },
 });

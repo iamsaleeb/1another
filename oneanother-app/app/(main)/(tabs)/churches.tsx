@@ -28,39 +28,37 @@ const ChurchesScreen: React.FC = () => {
 
   return (
     <View style={stylesApp.viewContainer}>
-      <View style={styles.viewHeader}>
-        <Text style={stylesTab.txtHeaderTitle}>Churches</Text>
+      <Text style={stylesTab.txtHeaderTitle}>Churches</Text>
 
-        {/* location */}
-        <TouchableOpacity style={styles.ctnButLocation}>
-          <View style={styles.viewButLocation}>
-            {/* <ImageScale
+      {/* location */}
+      <TouchableOpacity style={styles.ctnButLocation}>
+        <View style={styles.viewButLocation}>
+          {/* <ImageScale
               source={Images.ICON_LOCATION}
               width={16}
               style={stylesApp.mr4}
             /> */}
-            <View>
-              <Text style={styles.txtButLocation}>New South Wales</Text>
-              <View style={styles.viewButLocationText} />
-            </View>
+          <View>
+            <Text style={styles.txtButLocation}>New South Wales</Text>
+            <View style={styles.viewButLocationText} />
           </View>
-        </TouchableOpacity>
+        </View>
+      </TouchableOpacity>
 
-        {/* search bar */}
-        <SearchBar
-          lightTheme={true}
-          placeholder="Search all churches..."
-          //value={search}
-          //onChangeText={(text: string) => setSearch(text)}
-          containerStyle={styles.ctnSearch}
-          inputContainerStyle={styles.ctnSearchInput}
-          inputStyle={styles.inputSearch}
-          returnKeyType="search"
-          autoCorrect={false}
-          leftIconContainerStyle={styles.ctnIconSearch}
-          rightIconContainerStyle={styles.ctnIconClose}
-        />
-      </View>
+      {/* search bar */}
+      <SearchBar
+        lightTheme={true}
+        placeholder="Search all churches..."
+        //value={search}
+        //onChangeText={(text: string) => setSearch(text)}
+        containerStyle={styles.ctnSearch}
+        inputContainerStyle={styles.ctnSearchInput}
+        inputStyle={styles.inputSearch}
+        returnKeyType="search"
+        autoCorrect={false}
+        leftIconContainerStyle={styles.ctnIconSearch}
+        rightIconContainerStyle={styles.ctnIconClose}
+      />
 
       <ScrollView
         style={stylesApp.flex1}

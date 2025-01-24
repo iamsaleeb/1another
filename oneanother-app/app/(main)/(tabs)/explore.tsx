@@ -26,36 +26,33 @@ const ExploreScreen: React.FC = () => {
   }, []);
 
   return (
-    <View style={{ flex: 1 }}>
-      <View style={stylesApp.viewContainer}>
-        <Text style={stylesTab.txtHeaderTitle}>Explore</Text>
-        <View style={styles.titleContainer}>
-          <View style={styles.timeSortHorizontalContainerTop}>
-            <SecondaryButton text="Today" />
-            <SecondaryButton text="Tomorrow" />
-          </View>
-          <View style={styles.timeSortHorizontalContainerBottom}>
-            <SecondaryButton text="Next Week" />
-            <SecondaryButton text="Next Weekend" />
-          </View>
+    <View style={stylesApp.viewContainer}>
+      <Text style={stylesTab.txtHeaderTitle}>Explore</Text>
+      <View style={styles.titleContainer}>
+        <View style={styles.timeSortHorizontalContainerTop}>
+          <SecondaryButton text="Today" />
+          <SecondaryButton text="Tomorrow" />
         </View>
-        <FlatList
-          style={stylesApp.flex1}
-          contentContainerStyle={{ padding: 16 }}
-          data={events}
-          keyExtractor={(item) => item.id!.toString()}
-          renderItem={({ item }) => (
-            <EventItem
-              id={item.id}
-              title={item.title}
-              location={item.location}
-              churchName="Church Name"
-              speaker={item.speaker}
-              startDate={item.startDate}
-            />
-          )}
-        />
+        <View style={styles.timeSortHorizontalContainerBottom}>
+          <SecondaryButton text="Next Week" />
+          <SecondaryButton text="Next Weekend" />
+        </View>
       </View>
+      <FlatList
+        style={stylesApp.flex1}
+        data={events}
+        keyExtractor={(item) => item.id!.toString()}
+        renderItem={({ item }) => (
+          <EventItem
+            id={item.id}
+            title={item.title}
+            location={item.location}
+            churchName="Church Name"
+            speaker={item.speaker}
+            startDate={item.startDate}
+          />
+        )}
+      />
     </View>
   );
 };

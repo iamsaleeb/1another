@@ -35,7 +35,6 @@ const HomeScreen: React.FC = () => {
       <Text style={stylesTab.txtHeaderTitle}>Home</Text>
       <FlatList
         style={stylesApp.flex1}
-        contentContainerStyle={{ padding: 16 }}
         data={mockEvents}
         keyExtractor={(item) => item.id!.toString()}
         renderItem={({ item }) => (
