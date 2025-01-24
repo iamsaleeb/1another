@@ -33,41 +33,38 @@ const EventsScreen: React.FC = () => {
   }, []);
 
   return (
-    <View style={{ flex: 1 }}>
-      <View style={stylesApp.viewContainer}>
-        <Text style={stylesTab.txtHeaderTitle}>My Events</Text>
-        {events.length !== 0 ? (
-          <FlatList
-            style={stylesApp.flex1}
-            contentContainerStyle={{ padding: 16 }}
-            data={events}
-            keyExtractor={(item) => item.id!.toString()}
-            renderItem={({ item }) => (
-              <EventItem
-                id={item.id}
-                title={item.title}
-                location={item.location}
-                churchName="Church Name"
-                speaker={item.speaker}
-                startDate={item.startDate}
-              />
-            )}
-          />
-        ) : (
-          <View style={[cardStyles.card, styles.noEntryContainer]}>
-            <Image
-              source={require("@/assets/images/icons/event-orange-icon.png")}
-              style={styles.noEntryImage}
+    <View style={stylesApp.viewContainer}>
+      <Text style={stylesTab.txtHeaderTitle}>My Events</Text>
+      {events.length !== 0 ? (
+        <FlatList
+          style={stylesApp.flex1}
+          data={events}
+          keyExtractor={(item) => item.id!.toString()}
+          renderItem={({ item }) => (
+            <EventItem
+              id={item.id}
+              title={item.title}
+              location={item.location}
+              churchName="Church Name"
+              speaker={item.speaker}
+              startDate={item.startDate}
             />
-            <Text style={[textStyles.midTitle, styles.noEntryTitle]}>
-              Save events to see them here
-            </Text>
-            <Text style={[textStyles.subText, styles.noEntryDescription]}>
-              You can find events by all churches on the explore page
-            </Text>
-          </View>
-        )}
-      </View>
+          )}
+        />
+      ) : (
+        <View style={[cardStyles.card, styles.noEntryContainer]}>
+          <Image
+            source={require("@/assets/images/icons/event-orange-icon.png")}
+            style={styles.noEntryImage}
+          />
+          <Text style={[textStyles.midTitle, styles.noEntryTitle]}>
+            Save events to see them here
+          </Text>
+          <Text style={[textStyles.subText, styles.noEntryDescription]}>
+            You can find events by all churches on the explore page
+          </Text>
+        </View>
+      )}
     </View>
   );
 };
