@@ -12,71 +12,69 @@ import HeaderBar from "@/components/HeaderBar/HeaderBar";
 import { colors as colorTheme } from "@/themes/theme.styles";
 import { styles } from "./styles";
 import { styles as HeaderStyles } from "../styles";
-
+import ProtectedRoute from "@/components/ProtectedRoute";
 
 function Logo() {
-  return (
-    <Image
-      source={require("@/assets/1anotherLogo.svg")}
-    />
-  );
+  return <Image source={require("@/assets/1anotherLogo.svg")} />;
 }
 
 export default function TabsLayout() {
   return (
-    <SafeAreaProvider>
-      <Tabs
-        screenOptions={{
-          // tab bar
-          tabBarStyle: styles.tabbar,
-          tabBarActiveTintColor: colorTheme.primary,
-          tabBarInactiveTintColor: colorTheme.black,
-          tabBarIconStyle: styles.tabBarIcon,
+    <ProtectedRoute>
+      <SafeAreaProvider>
+        <Tabs
+          screenOptions={{
+            // tab bar
+            tabBarStyle: styles.tabbar,
+            tabBarActiveTintColor: colorTheme.primary,
+            tabBarInactiveTintColor: colorTheme.black,
+            tabBarIconStyle: styles.tabBarIcon,
 
-          // header
-          headerShown: true,
-          headerStyle: HeaderStyles.header,
-          headerTitle: Logo,
-        }}
-      >
-        <Tabs.Screen
-          name="index"
-          options={{
-            title: "",
-            tabBarIcon: ({ color }) => (
-              <Entypo name="home" size={24} color={color} />
-            ),
+            // header
+            headerShown: true,
+            headerStyle: HeaderStyles.header,
+            headerTitle: Logo,
           }}
-        />
-        <Tabs.Screen
-          name="churches"
-          options={{
-            title: "",
-            tabBarIcon: ({ color }) => (
-              <MaterialIcons name="church" size={24} color={color} />
-            ),
-          }}
-        />
-        <Tabs.Screen
-          name="explore"
-          options={{
-            title: "",
-            tabBarIcon: ({ color }) => (
-              <MaterialIcons name="explore" size={24} color={color} />
-            ),
-          }}
-        />
-        <Tabs.Screen
-          name="my-events"
-          options={{
-            title: "",
-            tabBarIcon: ({ color }) => (
-              <MaterialIcons name="calendar-month" size={24} color={color} />
-            ),
-          }}
-        />
-      </Tabs>
-    </SafeAreaProvider>
+        >
+          <Tabs.Screen
+            name="index"
+            options={{
+              title: "",
+              tabBarIcon: ({ color }) => (
+                <Entypo name="home" size={24} color={color} />
+              ),
+            }}
+          />
+          <Tabs.Screen
+            name="churches"
+            options={{
+              title: "",
+              tabBarIcon: ({ color }) => (
+                <MaterialIcons name="church" size={24} color={color} />
+              ),
+            }}
+          />
+          <Tabs.Screen
+            name="explore"
+            options={{
+              title: "",
+              tabBarIcon: ({ color }) => (
+                <MaterialIcons name="explore" size={24} color={color} />
+              ),
+            }}
+          />
+          <Tabs.Screen
+            name="my-events"
+            options={{
+              title: "",
+              tabBarIcon: ({ color }) => (
+                <MaterialIcons name="calendar-month" size={24} color={color} />
+              ),
+            }}
+          />
+        </Tabs>
+      </SafeAreaProvider>
+    </ProtectedRoute>
   );
 }
 
