@@ -29,6 +29,7 @@ const InputWithLabel: FC<Props> = React.forwardRef((props, ref) => {
         containerStyle={styles.containerStyle}
         inputContainerStyle={styles.inputContainer}
         renderErrorMessage={false}
+        disabledInputStyle={styles.disabledInput}
         inputStyle={{ paddingLeft: 6 }}
         placeholderTextColor={colorTheme.black2}
       />

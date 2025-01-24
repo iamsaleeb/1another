@@ -23,6 +23,9 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 0,
     marginVertical: 16,
   },
+  disabledInput: {
+    backgroundColor: colorTheme.grey2,
+  },
   label: {
     fontSize: 12,
     lineHeight: 14,
