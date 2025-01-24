@@ -13,6 +13,7 @@ import { colors as colorTheme } from "@/themes/theme.styles";
 import { styles } from "./styles";
 import { styles as HeaderStyles } from "../styles";
 import ProtectedRoute from "@/components/ProtectedRoute";
+import HeaderProfileButton from "@/components/HeaderBar/HeaderProfileButton";
 
 function Logo() {
   return <Image source={require("@/assets/1anotherLogo.svg")} />;
@@ -34,6 +35,9 @@ export default function TabsLayout() {
             headerShown: true,
             headerStyle: HeaderStyles.header,
             headerTitle: Logo,
+
+            // header right
+            headerRight: () => <HeaderProfileButton />,
           }}
         >
           <Tabs.Screen
