@@ -1,4 +1,3 @@
-import PrimaryButton from "@/components/common/primary-button.component";
 import DropdownBox from "@/components/DropdownBox/DropdownBox";
 import InputWithLabel from "@/components/InputWithLabel/InputWithLabel";
 import AuthService from "@/services/AuthService";
@@ -12,6 +11,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import PrimaryButton from "@/components/common/PrimaryButton/PrimaryButton";
 
 const setupProfileScreen: React.FC = () => {
   let [selectedCity, setSelectedCity] = useState("Sydney");
