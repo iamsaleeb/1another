@@ -22,6 +22,7 @@ export default function TabsLayout() {
             name="church/[id]"
             options={{
               headerShown: true,
+              headerTitle: "",
               headerBackButtonMenuEnabled: true,
               headerStyle: styles.header,
               animationTypeForReplace: "push",
@@ -32,6 +33,18 @@ export default function TabsLayout() {
             name="event/[id]"
             options={{
               headerShown: true,
+              headerTitle: "",
+              headerBackButtonMenuEnabled: true,
+              headerStyle: styles.header,
+              animationTypeForReplace: "push",
+              headerTintColor: colorTheme.light,
+            }}
+          />
+          <Stack.Screen
+            name="profile/EditProfile"
+            options={{
+              headerShown: true,
+              headerTitle: "",
               headerBackButtonMenuEnabled: true,
               headerStyle: styles.header,
               animationTypeForReplace: "push",
