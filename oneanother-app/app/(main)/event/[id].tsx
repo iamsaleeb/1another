@@ -123,7 +123,7 @@ const EventDetailsScreen: React.FC = () => {
               />
               <View style={styles.cardInfoRowDescriptionContainer}>
                 <Text style={textStyles.caption}>Location</Text>
-                <Text style={textStyles.textInputTitle}>{event.location}</Text>
+                <Text style={textStyles.textInputTitle}>{event.location} test</Text>
               </View>
             </View>
           </View>

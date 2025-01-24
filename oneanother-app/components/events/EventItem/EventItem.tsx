@@ -29,11 +29,13 @@ const formatTime = (time: Date) => {
   ];
   const hours = time.getHours();
   const minutes = time.getMinutes();
-  const formattedTime = `${hours % 12 || 12}:${minutes < 10 ? "0" : ""
-    }${minutes} ${hours < 12 ? "AM" : "PM"}`;
+  const formattedTime = `${hours % 12 || 12}:${
+    minutes < 10 ? "0" : ""
+  }${minutes} ${hours < 12 ? "AM" : "PM"}`;
 
-  return `${weekday[time.getDay()]}, ${time.getDate()} ${month[time.getMonth()]
-    } | ${formattedTime}`;
+  return `${weekday[time.getDay()]}, ${time.getDate()} ${
+    month[time.getMonth()]
+  } | ${formattedTime}`;
 };
 
 const EventSummaryComponent: React.FC<IEventDto> = ({
@@ -53,18 +55,16 @@ const EventSummaryComponent: React.FC<IEventDto> = ({
       <View style={styles.viewContainer}>
         <View style={styles.viewHeader}>
           {/* time */}
-          <Text style={styles.txtDate}>Mon, 10 May | 07:30 PM</Text>
+          <Text style={styles.txtDate}>{formatTime(startDate!)}</Text>
         </View>
 
         {/* title */}
-        <Text style={styles.txtTitle}>The Cross of Forgiveness</Text>
+        <Text style={styles.txtTitle}>{title}</Text>
 
         <View style={styles.viewContent}>
           <View style={styles.viewBody}>
-            <Text style={styles.txtBody}>
-              St Mary & St Mina’s Church, Bexley
-            </Text>
-            <Text style={styles.txtFooter}>Fr Dan Fanous</Text>
+            <Text style={styles.txtBody}>{churchName}</Text>
+            <Text style={styles.txtFooter}>{speaker}</Text>
           </View>
         </View>
 
