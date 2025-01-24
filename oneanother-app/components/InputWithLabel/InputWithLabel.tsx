@@ -5,11 +5,10 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { Button, Input, InputProps } from "@rneui/base";
+import { Input, InputProps } from "@rneui/base";
 import { styles } from "./styles";
 import { StyleProp, TextInput, View, ViewStyle } from "react-native";
-import { stylesApp } from "@/themes/app.styles";
-//import ViewIf from "../ViewIf/ViewIf";
+import { colors as colorTheme } from "@/themes/theme.styles";
 
 interface Props extends InputProps {
   containerMainStyle?: StyleProp<ViewStyle>;
@@ -27,9 +26,11 @@ const InputWithLabel: FC<Props> = React.forwardRef((props, ref) => {
         label={props.label}
         placeholder={props.label?.toString()}
         labelStyle={styles.label}
-        //containerStyle={styles.ctnInput}
-        inputContainerStyle={styles.inputCtn}
+        containerStyle={styles.containerStyle}
+        inputContainerStyle={styles.inputContainer}
         renderErrorMessage={false}
+        inputStyle={{ paddingLeft: 6 }}
+        placeholderTextColor={colorTheme.black2}
       />
     </View>
   );

@@ -6,6 +6,7 @@ export const colors = {
   background: "#FAFAFA",
   dark: "black",
   black: "#343434",
+  black2: "#525252",
   blue: "#1877F2",
   blue1: "#3F8EFC",
   shadow: "rgba(232, 232, 232, 102)",

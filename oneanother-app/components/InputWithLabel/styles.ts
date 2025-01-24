@@ -5,7 +5,6 @@ import { colors as colorTheme } from "@/themes/theme.styles";
 export const styles = StyleSheet.create({
   viewContainer: {
     ...stylesApp.flexRowCenter,
-    marginVertical: 16,
   },
 
   input: {
@@ -14,16 +13,15 @@ export const styles = StyleSheet.create({
     lineHeight: 14,
     minHeight: 0,
   },
-  inputCtn: {
-    //...stylesApp.input,
+  inputContainer: {
     boxSizing: "border-box",
     borderRadius: 4,
     borderWidth: 1,
     borderColor: "#727272",
   },
-  ctnInput: {
+  containerStyle: {
     paddingHorizontal: 0,
-
+    marginVertical: 16,
   },
   label: {
     fontSize: 12,
