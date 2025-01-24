@@ -13,10 +13,12 @@ export const styles = StyleSheet.create({
     color: colorTheme.black,
     marginBottom: 8,
   },
-  inputCtn: {
-    paddingHorizontal: 0,
-  },
   picker: {
-    minHeight: 40,
+    height: 40,
+    borderRadius: 4,
+    borderWidth: 1,
+    paddingLeft: 6,
+    fontSize: 14,
+    borderColor: "#727272",
   },
 });

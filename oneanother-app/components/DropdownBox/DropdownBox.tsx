@@ -16,7 +16,7 @@ const DropdownBox: FC<Props> = ({ label, options, value, onSelect }) => {
   return (
     <View style={styles.viewContainer}>
       {label && <Text style={styles.label}>{label}</Text>}
-      <View style={styles.inputCtn}>
+      <View>
         <Picker
           selectedValue={value}
           onValueChange={(itemValue) => onSelect(itemValue)}
