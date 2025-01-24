@@ -1,17 +1,14 @@
 import PrimaryButton from "@/components/common/primary-button.component";
-import LabelledTextInput from "@/components/common/TextInput";
-import TopBar from "@/components/common/top-bar.component";
 import DropdownBox from "@/components/DropdownBox/DropdownBox";
 import InputWithLabel from "@/components/InputWithLabel/InputWithLabel";
-import textStyles from "@/styles/common/text.style";
+import AuthService from "@/services/AuthService";
 import styles from "@/styles/screens/user-profile.style";
-import { Picker } from "@react-native-picker/picker";
 import React, { useState } from "react";
+import { router } from "expo-router";
 
 import {
   Image,
   KeyboardAvoidingView,
-  Text,
   TouchableOpacity,
   View,
 } from "react-native";
@@ -22,6 +19,11 @@ const setupProfileScreen: React.FC = () => {
     { label: "Sydney", value: "Sydney" },
     { label: "Toronto", value: "Toronto" },
   ];
+
+  const handleSignOut = () => {
+    AuthService.logout();
+    router.replace("/(auth)/login.screen");
+  };
 
   return (
     <KeyboardAvoidingView style={styles.container}>
@@ -47,7 +49,7 @@ const setupProfileScreen: React.FC = () => {
           />{" "}
         </View>
       </View>
-      <PrimaryButton text="Sign out" onPress={() => {}} />
+      <PrimaryButton text="Sign out" onPress={handleSignOut} />
     </KeyboardAvoidingView>
   );
 };
