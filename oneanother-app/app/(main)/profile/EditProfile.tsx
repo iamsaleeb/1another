@@ -4,6 +4,7 @@ import AuthService from "@/services/AuthService";
 import styles from "@/styles/screens/user-profile.style";
 import React, { useState } from "react";
 import { router } from "expo-router";
+import { stylesApp } from "@/themes/app.styles";
 
 import {
   Image,

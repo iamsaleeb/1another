@@ -54,7 +54,6 @@ const styles = StyleSheet.create({
   },
   profileInfoCard: {
     backgroundColor: colors.secondary,
-    height: "55%",
     borderRadius: 8,
     marginTop: 32,
     boxShadow: `4px 4px 10px ${colors.shadow}`,

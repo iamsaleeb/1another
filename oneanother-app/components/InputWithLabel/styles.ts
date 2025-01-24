@@ -22,6 +22,7 @@ export const styles = StyleSheet.create({
   containerStyle: {
     paddingHorizontal: 0,
     marginVertical: 16,
+    
   },
   disabledInput: {
     backgroundColor: colorTheme.grey2,
