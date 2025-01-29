@@ -9,6 +9,7 @@ export const colors = {
   black2: "#525252",
   blue: "#1877F2",
   blue1: "#3F8EFC",
+  red: "#FF0000",
   shadow: "rgba(232, 232, 232, 102)",
   blackOpacity: (opacity: number) => `rgba(0, 0, 0, ${opacity})`,
   grey: "#9F9F9F",

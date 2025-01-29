@@ -1,23 +1,16 @@
-import React, {
-  FC,
-  useEffect,
-  useImperativeHandle,
-  useRef,
-  useState,
-} from "react";
+import React, { FC } from "react";
 import { Input, InputProps } from "@rneui/base";
 import { styles } from "./styles";
-import { StyleProp, TextInput, View, ViewStyle } from "react-native";
+import { StyleProp, View, ViewStyle } from "react-native";
 import { colors as colorTheme } from "@/themes/theme.styles";
 
 interface Props extends InputProps {
   containerMainStyle?: StyleProp<ViewStyle>;
-  withEdit?: boolean;
-  onSave?: () => void;
+  error?: string;
 }
 
 const InputWithLabel: FC<Props> = React.forwardRef((props, ref) => {
-  const { withEdit, onSave } = props;
+  const { error } = props;
 
   return (
     <View style={[styles.viewContainer]}>
@@ -27,8 +20,13 @@ const InputWithLabel: FC<Props> = React.forwardRef((props, ref) => {
         placeholder={props.label?.toString()}
         labelStyle={styles.label}
         containerStyle={styles.containerStyle}
-        inputContainerStyle={styles.inputContainer}
-        renderErrorMessage={false}
+        inputContainerStyle={[
+          styles.inputContainer,
+          error ? { borderColor: colorTheme.red } : {}
+        ]}
+        renderErrorMessage={!!error}
+        errorMessage={error}
+        errorStyle={{ color: colorTheme.red }}
         disabledInputStyle={styles.disabledInput}
         inputStyle={{ paddingLeft: 6 }}
         placeholderTextColor={colorTheme.black2}

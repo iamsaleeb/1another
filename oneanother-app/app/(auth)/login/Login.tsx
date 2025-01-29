@@ -4,8 +4,6 @@ import PrimaryButton from "@/components/common/primary-button.component";
 import styles from "@/styles/screens/user-profile.style";
 import AuthService from "@/services/AuthService";
 import { router } from "expo-router";
-import TopBar from "@/components/common/top-bar.component";
-import LabelledTextInput from "@/components/common/TextInput";
 import InputWithLabel from "@/components/InputWithLabel/InputWithLabel";
 
 const LoginScreen = () => {
@@ -25,12 +23,6 @@ const LoginScreen = () => {
 
   return (
     <KeyboardAvoidingView style={styles.container}>
-      <TopBar>
-        <View style={styles.titleContainer}>
-          <Text style={styles.titleBoldText}>1</Text>
-          <Text style={styles.titleRegularText}>another</Text>
-        </View>
-      </TopBar>
       <View style={styles.screenContentContainer}>
         <View style={styles.profileInfoCard}>
           <InputWithLabel
@@ -46,6 +38,8 @@ const LoginScreen = () => {
             value={password}
             onChangeText={setPassword}
             keyboardType="visible-password"
+            error={error!}
+            secureTextEntry
           />
         </View>
       </View>
