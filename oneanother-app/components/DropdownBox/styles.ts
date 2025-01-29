@@ -1,11 +1,7 @@
 import { StyleSheet } from "react-native";
-import { stylesApp } from "@/themes/app.styles";
 import { colors as colorTheme } from "@/themes/theme.styles";
 
 export const styles = StyleSheet.create({
-  viewContainer: {
-    marginVertical: 16,
-  },
   label: {
     fontSize: 12,
     lineHeight: 14,
@@ -17,8 +13,16 @@ export const styles = StyleSheet.create({
     height: 40,
     borderRadius: 4,
     borderWidth: 1,
-    paddingLeft: 6,
-    fontSize: 14,
+    paddingHorizontal: 8,
     borderColor: "#727272",
+    backgroundColor: 'white',
+  },
+  placeholderStyle: {
+    fontSize: 14,
+    color: colorTheme.black2,
+  },
+  selectedTextStyle: {
+    fontSize: 14,
+    color: colorTheme.black,
   },
 });

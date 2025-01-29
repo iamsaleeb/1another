@@ -29,7 +29,7 @@ const OnboardingScreenFive: React.FC = () => {
         <TouchableOpacity
           style={styles.signUpButton}
           onPress={() =>
-            router.replace("/(auth)/setup-profile.screen")
+            router.replace("/(auth)/register/Register")
           }
         >
           <View style={styles.signUpButtonHolder}>
@@ -39,7 +39,7 @@ const OnboardingScreenFive: React.FC = () => {
         <TouchableOpacity
           style={styles.signUpButton}
           onPress={() =>
-            router.replace("/(auth)/login.screen")
+            router.replace("/(auth)/login/Login")
           }
         >
           <View style={styles.loginButtonHolder}>

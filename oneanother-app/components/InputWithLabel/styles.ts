@@ -21,7 +21,7 @@ export const styles = StyleSheet.create({
   },
   containerStyle: {
     paddingHorizontal: 0,
-    marginVertical: 16,
+    marginBottom: 24,
     
   },
   disabledInput: {

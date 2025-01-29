@@ -1,7 +1,7 @@
-import React, { FC, useState } from "react";
-import { View, Text, TouchableOpacity, Modal, ScrollView } from "react-native";
+import React, { FC } from "react";
+import { View, Text } from "react-native";
+import { Dropdown } from 'react-native-element-dropdown';
 import { styles } from "./styles";
-import { Picker } from "@react-native-picker/picker";
 
 interface Props {
   label?: string;
@@ -11,26 +11,19 @@ interface Props {
 }
 
 const DropdownBox: FC<Props> = ({ label, options, value, onSelect }) => {
-  const [visible, setVisible] = useState(false);
-
   return (
-    <View style={styles.viewContainer}>
+    <View>
       {label && <Text style={styles.label}>{label}</Text>}
-      <View>
-        <Picker
-          selectedValue={value}
-          onValueChange={(itemValue) => onSelect(itemValue)}
-          style={styles.picker}
-        >
-          {options.map((option, index) => (
-            <Picker.Item
-              key={index}
-              label={option.label}
-              value={option.value}
-            />
-          ))}
-        </Picker>
-      </View>
+      <Dropdown
+        data={options}
+        labelField="label"
+        valueField="value"
+        value={value}
+        onChange={item => onSelect(item.value)}
+        style={styles.picker}
+        placeholderStyle={styles.placeholderStyle}
+        selectedTextStyle={styles.selectedTextStyle}
+      />
     </View>
   );
 };

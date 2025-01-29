@@ -16,7 +16,7 @@ import {
   KeyboardAvoidingView,
 } from "react-native";
 
-const setupProfileScreen: React.FC = () => {
+const RegisterScreen: React.FC = () => {
   const router: Router = useRouter();
   const [selectedCity, setSelectedCity] = useState("Sydney");
   const cityOptions = [
@@ -26,12 +26,6 @@ const setupProfileScreen: React.FC = () => {
 
   return (
     <KeyboardAvoidingView style={styles.container}>
-      <TopBar>
-        <View style={styles.titleContainer}>
-          <Text style={styles.titleBoldText}>1</Text>
-          <Text style={styles.titleRegularText}>another</Text>
-        </View>
-      </TopBar>
       <View style={styles.screenContentContainer}>
         <TouchableOpacity style={styles.profilePicker}>
           <Image
@@ -68,4 +62,4 @@ const setupProfileScreen: React.FC = () => {
     </KeyboardAvoidingView>
   );
 };
-export default setupProfileScreen;
+export default RegisterScreen;
