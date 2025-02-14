@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "one-another",
-    "slug": "one-another",
+    "slug": "1another",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -43,6 +43,7 @@
       "eas": {
         "projectId": "d27f3b6b-454d-420c-b6c6-b2696c62ba99"
       }
-    }
+    },
+    "owner": "anthonysaleeb-org"
   }
 }
