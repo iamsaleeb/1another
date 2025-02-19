@@ -21,6 +21,9 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
 
+    - name: Determine stack name
+      id: stack-name
+      run: echo "STACK_NAME=one-another-${GITHUB_REF##*/}" >> $GITHUB_ENV
 
     - name: Validate CloudFormation template
       run: |
@@ -30,5 +33,5 @@ jobs:
       run: |
         aws cloudformation deploy \
           --template-file OneAnother/.aws/cloudformation.yaml \
-          --stack-name oneAnother-Dev \
+          --stack-name ${{ env.STACK_NAME }} \
           --capabilities CAPABILITY_NAMED_IAM
