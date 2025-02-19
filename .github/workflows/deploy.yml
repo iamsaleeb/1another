@@ -43,9 +43,9 @@ jobs:
             --capabilities CAPABILITY_NAMED_IAM \
             --parameter-overrides \
               VPC=$VPC_ID \
-              DBUser=$DB_USER \
-              DBPassword=$DB_PASSWORD \
-              DBName=$DB_NAME
+              DBUser=${{ secrets.DB_USER }} \
+              DBPassword=${{ secrets.DB_PASSWORD }} \
+              DBName=${{ secrets.DB_NAME }}
 
       - name: Retrieve S3 bucket name
         id: get_s3_bucket
