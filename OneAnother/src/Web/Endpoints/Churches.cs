@@ -23,6 +23,7 @@ public class Churches : EndpointGroupBase
         var result = await sender.Send(query);
         return TypedResults.Ok(result);
     }
+    //s
 
     public async Task<Ok<ChurchDto>> GetChurch(ISender sender, [AsParameters] GetChurchQuery query)
     {
