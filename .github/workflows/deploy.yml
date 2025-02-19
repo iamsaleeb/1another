@@ -19,7 +19,7 @@ jobs:
           dotnet-version: '9.0.x'
 
       - name: Install dependencies
-        run: dotnet restore src/Web/YourProjectName.csproj
+        run: dotnet restore OneAnother/src/Web/Web.csproj
 
       - name: Build
         run: dotnet build --configuration Release --no-restore OneAnother/src/Web/Web.csproj
