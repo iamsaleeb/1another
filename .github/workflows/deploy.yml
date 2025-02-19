@@ -29,40 +29,8 @@ jobs:
 
       - name: Zip published files
         run: zip -r myapp.zip ./publish
-
-name: Deploy to AWS Elastic Beanstalk
-
-on:
-  push:
-    branches:
-      - main
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v2
-        with:
-          dotnet-version: '9.0.x'
-
-      - name: Install dependencies
-        run: dotnet restore src/Web/YourProjectName.csproj
-
-      - name: Build
-        run: dotnet build --configuration Release --no-restore src/Web/YourProjectName.csproj
-
-      - name: Publish
-        run: dotnet publish --configuration Release --output ./publish --no-build src/Web/YourProjectName.csproj
-
-      - name: Zip published files
-        run: zip -r myapp.zip ./publish
-
-      - name: Configure AWS SSO
+        
+              - name: Configure AWS SSO
         run: |
           aws configure set sso_start_url ${{ secrets.AWS_SSO_START_URL }}
           aws configure set sso_region ${{ secrets.AWS_SSO_REGION }}
