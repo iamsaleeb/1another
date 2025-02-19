@@ -30,7 +30,7 @@ jobs:
       - name: Zip published files
         run: zip -r myapp.zip ./publish
         
-              - name: Configure AWS SSO
+      - name: Configure AWS SSO
         run: |
           aws configure set sso_start_url ${{ secrets.AWS_SSO_START_URL }}
           aws configure set sso_region ${{ secrets.AWS_SSO_REGION }}
