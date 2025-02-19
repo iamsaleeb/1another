@@ -16,12 +16,27 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Set up AWS CLI
-      uses: aws-actions/configure-aws-credentials@v1
+    # - name: Set up AWS CLI
+      # uses: aws-actions/configure-aws-credentials@v1
+      # with:
+        # aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        # aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        # aws-region: ap-southeast-2
+        
+    - name: "Configure AWS Credentials" Action for GitHub Actions
+  # You may pin to the exact commit or the version.
+  # uses: aws-actions/configure-aws-credentials@ececac1a45f3b08a01d2dd070d28d111c5fe6722
+      uses: aws-actions/configure-aws-credentials@v4.1.0
       with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        # AWS Region, e.g. us-east-2
         aws-region: ap-southeast-2
+        # AWS Access Key ID. Provide this key if you want to assume a role using access keys rather than a web identity token.
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        # AWS Secret Access Key. Required if aws-access-key-id is provided.
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        # AWS Session Token.
+        aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+          
 
     - name: Validate CloudFormation template
       run: |
