@@ -34,4 +34,5 @@ jobs:
         aws cloudformation deploy \
           --template-file OneAnother/.aws/cloudformation.yaml \
           --stack-name ${{ env.STACK_NAME }} \
+          --parameter-overrides StackName=${{ env.STACK_NAME }} \
           --capabilities CAPABILITY_NAMED_IAM
