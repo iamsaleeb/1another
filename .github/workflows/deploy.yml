@@ -30,6 +30,23 @@ jobs:
       - name: Zip published files
         run: zip -r myapp.zip ./publish
 
+      - name: Create S3 bucket if not exists
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+        run: |
+          aws s3api head-bucket --bucket ${{ secrets.AWS_S3_BUCKET }} || aws s3api create-bucket --bucket ${{ secrets.AWS_S3_BUCKET }} --region ${{ secrets.AWS_REGION }} --create-bucket-configuration LocationConstraint=${{ secrets.AWS_REGION }}
+
+      - name: Upload to S3
+        run: aws s3 cp myapp.zip s3://${{ secrets.AWS_S3_BUCKET }}/myapp.zip
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+
       - name: Deploy CloudFormation stack
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -46,22 +63,3 @@ jobs:
               DBUser=${{ secrets.DB_USER }} \
               DBPassword=${{ secrets.DB_PASSWORD }} \
               DBName=${{ secrets.DB_NAME }}
-
-      - name: Retrieve S3 bucket name
-        id: get_s3_bucket
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
-          AWS_REGION: ap-southeast-2
-        run: |
-          S3_BUCKET=$(aws cloudformation describe-stacks --stack-name my-cloudformation-stack --query "Stacks[0].Outputs[?OutputKey=='S3BucketName'].OutputValue" --output text)
-          echo "S3_BUCKET=$S3_BUCKET" >> $GITHUB_ENV
-
-      - name: Upload to S3
-        run: aws s3 cp myapp.zip s3://$S3_BUCKET/myapp.zip
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
-          AWS_REGION: ap-southeast-2
