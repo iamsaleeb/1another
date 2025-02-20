@@ -1,0 +1,36 @@
+name: Authorize AWS SSO
+
+on: [push]
+
+jobs:
+  authorize:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Configure AWS SSO
+      run: |
+        aws configure set sso_start_url https://d-9767b98ea4.awsapps.com/start/#
+        aws configure set sso_region ap-southeast-2
+        aws configure set sso_account_id 715841333284
+        aws configure set sso_role_AdministratorAccess
+        aws sso login
+
+    - name: Get AWS credentials
+      id: aws-creds
+      run: |
+        AWS_ACCESS_KEY_ID=$(aws configure get aws_access_key_id)
+        AWS_SECRET_ACCESS_KEY=$(aws configure get aws_secret_access_key)
+        echo "::set-output name=AWS_ACCESS_KEY_ID::$AWS_ACCESS_KEY_ID"
+        echo "::set-output name=AWS_SECRET_ACCESS_KEY::$AWS_SECRET_ACCESS_KEY"
+
+    - name: Update GitHub Secrets
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        AWS_ACCESS_KEY_ID: ${{ steps.aws-creds.outputs.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ steps.aws-creds.outputs.AWS_SECRET_ACCESS_KEY }}
+      run: |
+        gh secret set AWS_ACCESS_KEY_ID --body "$AWS_ACCESS_KEY_ID"
+        gh secret set AWS_SECRET_ACCESS_KEY --body "$AWS_SECRET_ACCESS_KEY"
