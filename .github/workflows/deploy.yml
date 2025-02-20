@@ -1,64 +1,34 @@
-name: Deploy to AWS Elastic Beanstalk
+name: "Deploy to AWS"
 
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
+  authorize:
+    uses: ./.github/workflows/authorize.yml
+    secrets:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   deploy:
     runs-on: ubuntu-latest
-
+    needs: authorize
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-      - name: Setup .NET 9
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: '9.0'
-
-      - name: Restore dependencies
-        run: dotnet restore OneAnother/src/Web/Web.csproj
-
-      - name: Build application
-        run: dotnet publish -c Release -o ./publish OneAnother/src/Web/Web.csproj
-
-      - name: Zip application for deployment
-        run: zip -r deploy.zip ./publish/*
-
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v2
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
-          aws-region: ap-southeast-2
-
-      - name: Get CloudFormation stack outputs
-        id: cfn-outputs
+      - name: Configure AWS Credentials
         run: |
-          aws cloudformation describe-stacks --stack-name YourStackName --query "Stacks[0].Outputs" > outputs.json
-          cat outputs.json
+          echo "Configuring AWS credentials..."
+          export AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}
+          export AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          export AWS_SESSION_TOKEN=${{ secrets.AWS_SESSION_TOKEN }}
 
-      - name: Extract DeploymentBucketName
-        id: extract-bucket
+      - name: Deploy CloudFormation Stack
         run: |
-          bucket_name=$(jq -r '.[] | select(.OutputKey=="DeploymentBucketName") | .OutputValue' outputs.json)
-          echo "bucket_name=${bucket_name}" >> $GITHUB_ENV
-
-      - name: Upload deployment package to S3
-        run: |
-          aws s3 cp deploy.zip s3://${{ env.bucket_name }}/deploy.zip
-
-      - name: Deploy to Elastic Beanstalk
-        run: |
-          aws elasticbeanstalk create-application-version \
-            --application-name DotnetApiApp \
-            --version-label v-${{ github.run_number }} \
-            --source-bundle S3Bucket=${{ env.bucket_name }},S3Key=deploy.zip
-          
-          aws elasticbeanstalk update-environment \
-            --application-name DotnetApiApp \
-            --environment-name DotnetApiEnv \
-            --version-label v-${{ github.run_number }}
+          aws cloudformation deploy \
+            --template-file cloudformation.yaml \
+            --stack-name my-cloud-stack \
+            --region ${{ secrets.AWS_REGION }} \
+            --capabilities CAPABILITY_NAMED_IAM

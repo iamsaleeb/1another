@@ -1,36 +1,39 @@
-name: Authorize AWS SSO
+name: "Authorize AWS Session"
 
-on: [push]
+on:
+  workflow_call:
+    secrets:
+      GH_TOKEN:
+        required: true
 
 jobs:
   authorize:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-    - name: Configure AWS SSO
-      run: |
-        aws configure set sso_start_url https://d-9767b98ea4.awsapps.com/start/#
-        aws configure set sso_region ap-southeast-2
-        aws configure set sso_account_id 715841333284
-        aws configure set sso_role_name AdministratorAccess
-        aws sso login
+      - name: Configure AWS SSO
+        run: |
+          aws configure set sso_start_url ${{ secrets.AWS_SSO_START_URL }}
+          aws configure set sso_region ${{ secrets.AWS_REGION }}
+          aws configure set sso_account_id ${{ secrets.AWS_ACCOUNT_ID }}
+          aws configure set sso_role_name ${{ secrets.AWS_ROLE_NAME }}
 
-    - name: Get AWS credentials
-      id: aws-creds
-      run: |
-        AWS_ACCESS_KEY_ID=$(aws configure get aws_access_key_id --profile my-sso-profile)
-        AWS_SECRET_ACCESS_KEY=$(aws configure get aws_secret_access_key --profile my-sso-profile)
-        echo "::set-output name=AWS_ACCESS_KEY_ID::$AWS_ACCESS_KEY_ID"
-        echo "::set-output name=AWS_SECRET_ACCESS_KEY::$AWS_SECRET_ACCESS_KEY"
+      - name: Login to AWS via SSO
+        run: aws sso login
 
-    - name: Update GitHub Secrets
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        AWS_ACCESS_KEY_ID: ${{ steps.aws-creds.outputs.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ steps.aws-creds.outputs.AWS_SECRET_ACCESS_KEY }}
-      run: |
-        gh secret set AWS_ACCESS_KEY_ID --body "$AWS_ACCESS_KEY_ID"
-        gh secret set AWS_SECRET_ACCESS_KEY --body "$AWS_SECRET_ACCESS_KEY"
+      - name: Retrieve AWS Credentials
+        run: |
+          aws sso get-role-credentials --account-id ${{ secrets.AWS_ACCOUNT_ID }} --role-name ${{ secrets.AWS_ROLE_NAME }} > creds.json
+          export AWS_ACCESS_KEY_ID=$(jq -r '.roleCredentials.accessKeyId' creds.json)
+          export AWS_SECRET_ACCESS_KEY=$(jq -r '.roleCredentials.secretAccessKey' creds.json)
+          export AWS_SESSION_TOKEN=$(jq -r '.roleCredentials.sessionToken' creds.json)
+
+      - name: Store Credentials in GitHub Secrets
+        run: |
+          gh secret set AWS_ACCESS_KEY_ID --body "$AWS_ACCESS_KEY_ID"
+          gh secret set AWS_SECRET_ACCESS_KEY --body "$AWS_SECRET_ACCESS_KEY"
+          gh secret set AWS_SESSION_TOKEN --body "$AWS_SESSION_TOKEN"
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
