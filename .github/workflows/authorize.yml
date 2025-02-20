@@ -16,8 +16,7 @@ jobs:
         aws configure set sso_region ap-southeast-2
         aws configure set sso_account_id 715841333284
         aws configure set sso_role_name AdministratorAccess
-        aws configure set sso_profile_name my-sso-profile
-        aws sso login --profile my-sso-profile
+        aws sso login
 
     - name: Get AWS credentials
       id: aws-creds
