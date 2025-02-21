@@ -19,16 +19,16 @@ jobs:
         dotnet-version: '9.0.x'
 
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore OneAnother/src/Web/Web.csproj
 
     - name: Build
-      run: dotnet build --configuration Release --no-restore
+      run: dotnet build --configuration Release --no-restore OneAnother/src/Web/Web.csproj
 
     - name: Publish
-      run: dotnet publish -c Release -o ./publish
+      run: dotnet publish -c Release -o ./publish OneAnother/src/Web/Web.csproj
 
     - name: Zip published files
-      run: zip -r ./publish.zip ./publish
+      run: zip -r ./publish.zip ./publish/*
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
