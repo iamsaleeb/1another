@@ -38,9 +38,7 @@ jobs:
       id: deploy-stack
       run: aws cloudformation deploy --template-file OneAnother/.aws/cloudformation.yaml --stack-name oneanother-dev --capabilities CAPABILITY_NAMED_IAM
 
-    - name: Get S3 bucket name
-      id: get-s3-bucket
-      run: echo "S3_BUCKET_NAME=$(aws cloudformation describe-stacks --stack-name oneanother-dev --query 'Stacks[0].Outputs[?OutputKey==`S3BucketName`].OutputValue' --output text)" >> $GITHUB_ENV
-
-    - name: Upload to S3
-      run: aws s3 cp ./publish s3://$S3_BUCKET_NAME/ --recursive
+    - name: Upload to Elastic Beanstalk S3 bucket
+      run: |
+        zip -r deploy.zip ./publish
+        aws s3 cp deploy.zip s3://elasticbeanstalk-${{ secrets.AWS_REGION }}-123456789012/deploy.zip
